@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -9,6 +11,8 @@ const LoginPage: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Login attempt:', { email, password });
+        // Simulating login redirect
+        navigate('/main/dashboard');
     };
 
     return (
@@ -52,7 +56,7 @@ const LoginPage: React.FC = () => {
                         <div className="space-y-2">
                             <div className="flex items-center justify-between ml-1 text-sm font-medium">
                                 <label className="text-slate-300">Password</label>
-                                <a href="#" className="text-blue-500 hover:text-blue-400 transition-colors">Forgot?</a>
+                                <Link to="/forgot-password" title="Forgot Password" className="text-blue-500 hover:text-blue-400 transition-colors">Forgot?</Link>
                             </div>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-blue-500 text-slate-500">
@@ -85,13 +89,6 @@ const LoginPage: React.FC = () => {
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </button>
                     </form>
-
-                    <div className="mt-8 pt-6 border-t border-slate-800 text-center">
-                        <p className="text-slate-400 text-sm">
-                            Don't have an account?{' '}
-                            <a href="#" className="text-blue-500 font-semibold hover:text-blue-400 transition-colors ml-1">Sign up for free</a>
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
