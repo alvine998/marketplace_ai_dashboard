@@ -81,8 +81,8 @@ const DashboardPage: React.FC = () => {
                                         <td className="px-6 py-4 font-semibold text-white">{order.amount}</td>
                                         <td className="px-6 py-4">
                                             <span className={`px-2 py-1 rounded-lg text-xs font-medium ${order.status === 'Completed' ? 'bg-green-500/10 text-green-500' :
-                                                    order.status === 'Pending' ? 'bg-amber-500/10 text-amber-500' :
-                                                        'bg-red-500/10 text-red-500'
+                                                order.status === 'Pending' ? 'bg-amber-500/10 text-amber-500' :
+                                                    'bg-red-500/10 text-red-500'
                                                 }`}>
                                                 {order.status}
                                             </span>
@@ -94,20 +94,66 @@ const DashboardPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Upgrade Card / Tip */}
-                <div className="bg-linear-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 text-white relative overflow-hidden shadow-2xl shadow-blue-500/20">
-                    <div className="relative z-10">
-                        <h2 className="text-2xl font-bold mb-4">Go Unlimited</h2>
-                        <p className="text-blue-100 mb-8 leading-relaxed">
-                            Unlock advanced AI analytics and unlimited products with our Pro plan. Reach more customers today.
-                        </p>
-                        <button className="w-full py-4 bg-white text-blue-600 font-bold rounded-2xl hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 group">
-                            Upgrade Now
-                            <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                        </button>
+                {/* Growth Analytics Chart */}
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col">
+                    <div className="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 className="text-lg font-bold text-white">Growth Analytics</h2>
+                            <p className="text-xs text-slate-500 mt-0.5">Revenue growth over the last 7 days</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/10 rounded-lg">
+                                <TrendingUp className="w-3.5 h-3.5 text-green-500" />
+                                <span className="text-[10px] font-bold text-green-500">+12.5%</span>
+                            </div>
+                        </div>
                     </div>
-                    {/* Decorative background circle */}
-                    <div className="absolute top-[-20%] right-[-20%] w-64 h-64 bg-white/10 blur-3xl rounded-full" />
+
+                    <div className="flex-1 relative min-h-[200px] flex items-end justify-between gap-2 px-2">
+                        {/* Custom SVG Line Chart */}
+                        <svg className="absolute inset-0 w-full h-full pr-4" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+                                    <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M 0 180 Q 50 140 100 160 T 200 100 T 300 120 T 400 40 T 500 80"
+                                fill="transparent"
+                                stroke="#3b82f6"
+                                strokeWidth="3"
+                                className="w-full"
+                                strokeLinecap="round"
+                            />
+                            <path
+                                d="M 0 180 Q 50 140 100 160 T 200 100 T 300 120 T 400 40 T 500 80 L 500 200 L 0 200 Z"
+                                fill="url(#chartGradient)"
+                            />
+                        </svg>
+
+                        {/* Chart Bars (Visual purely for design) */}
+                        {[40, 70, 45, 90, 65, 85, 100].map((h, i) => (
+                            <div key={i} className="group relative flex flex-col items-center gap-2 flex-1">
+                                <div
+                                    style={{ height: `${h}%` }}
+                                    className="w-full max-w-[12px] bg-slate-800/50 rounded-t-full transition-all duration-500 group-hover:bg-blue-600/50 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] cursor-pointer"
+                                />
+                                <span className="text-[10px] font-bold text-slate-600 uppercase tracking-tighter">Day {i + 1}</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-6 pt-6 border-t border-slate-800/50 grid grid-cols-2 gap-4">
+                        <div className="text-left">
+                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Avg. Daily</p>
+                            <p className="text-xl font-bold text-white mt-0.5">$1,240</p>
+                        </div>
+                        <div className="text-left">
+                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Projection</p>
+                            <p className="text-xl font-bold text-blue-500 mt-0.5">$42.5k</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
