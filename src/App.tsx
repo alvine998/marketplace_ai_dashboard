@@ -15,6 +15,7 @@ import SellerPage from './pages/sellers';
 import SellerDetailPage from './pages/sellers/detail';
 import AdminManagementPage from './pages/settings/admin-management';
 import CategoriesPage from './pages/settings/categories';
+import RolePermissionsPage from './pages/settings/roles-permissions';
 import './App.css';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="sellers/:id" element={<SellerDetailPage />} />
           <Route path="settings/admin" element={<AdminManagementPage />} />
           <Route path="settings/categories" element={<CategoriesPage />} />
+          <Route path="settings/roles" element={<RolePermissionsPage />} />
           {/* Add more main routes here */}
         </Route>
       </Routes>

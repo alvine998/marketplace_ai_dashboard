@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Package,
     Plus,
@@ -7,112 +7,173 @@ import {
     MoreVertical,
     Edit,
     Trash2,
-    ExternalLink,
+    Store,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    ArrowUpRight,
+    Layers,
+    DollarSign,
+    Box
 } from 'lucide-react';
 
+interface Product {
+    id: string;
+    name: string;
+    shopName: string;
+    category: string;
+    price: string;
+    stock: number;
+    status: 'In Stock' | 'Low Stock' | 'Out of Stock';
+    image: string;
+}
+
 const ProductPage: React.FC = () => {
-    const products = [
-        { id: '1', name: 'Premium Wireless Headphones', category: 'Electronics', price: '$299.00', stock: 45, status: 'In Stock', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop' },
-        { id: '2', name: 'Smart Fitness Tracker', category: 'Wearables', price: '$129.00', stock: 12, status: 'Low Stock', image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=100&h=100&fit=crop' },
-        { id: '3', name: 'Leather Messenger Bag', category: 'Accessories', price: '$189.00', stock: 0, status: 'Out of Stock', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=100&h=100&fit=crop' },
-        { id: '4', name: 'Mechanical Gaming Keyboard', category: 'Computers', price: '$159.00', stock: 89, status: 'In Stock', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=100&h=100&fit=crop' },
-        { id: '5', name: 'Ergonomic Office Chair', category: 'Furniture', price: '$449.00', stock: 23, status: 'In Stock', image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=100&h=100&fit=crop' },
-    ];
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All Categories');
+
+    const [products] = useState<Product[]>([
+        { id: 'PRD-001', name: 'Premium Wireless Headphones', shopName: 'Tech Haven', category: 'Electronics', price: '$299.00', stock: 45, status: 'In Stock', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop' },
+        { id: 'PRD-002', name: 'Smart Fitness Tracker', shopName: 'Modern Gear', category: 'Wearables', price: '$129.00', stock: 12, status: 'Low Stock', image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=100&h=100&fit=crop' },
+        { id: 'PRD-003', name: 'Leather Messenger Bag', shopName: 'Urban Style', category: 'Accessories', price: '$189.00', stock: 0, status: 'Out of Stock', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=100&h=100&fit=crop' },
+        { id: 'PRD-004', name: 'Mechanical Gaming Keyboard', shopName: 'Tech Haven', category: 'Computers', price: '$159.00', stock: 89, status: 'In Stock', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=100&h=100&fit=crop' },
+        { id: 'PRD-005', name: 'Ergonomic Office Chair', shopName: 'Eco Spark', category: 'Furniture', price: '$449.00', stock: 23, status: 'In Stock', image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=100&h=100&fit=crop' },
+        { id: 'PRD-006', name: 'Minimalist Desk Lamp', shopName: 'Eco Spark', category: 'Furniture', price: '$79.00', stock: 56, status: 'In Stock', image: 'https://images.unsplash.com/photo-1534073828943-f801091bb18c?w=100&h=100&fit=crop' },
+        { id: 'PRD-007', name: 'Ultra HD Camera', shopName: 'Tech Haven', category: 'Electronics', price: '$1,299.00', stock: 8, status: 'Low Stock', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=100&h=100&fit=crop' },
+    ]);
+
+    const filteredProducts = products.filter(product => {
+        const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.shopName.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategory === 'All Categories' || product.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+    });
+
+    const categories = ['Electronics', 'Wearables', 'Accessories', 'Computers', 'Furniture'];
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Actions */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold text-white tracking-tight">Products</h1>
-                    <p className="text-slate-400 mt-1">Manage your catalog and inventory.</p>
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="text-left">
+                    <h1 className="text-3xl font-bold text-white tracking-tight">Marketplace Products</h1>
+                    <p className="text-slate-400 mt-1">Oversee and manage product listings from all registered sellers.</p>
                 </div>
-                <button className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
-                    <Plus className="w-5 h-5" />
-                    Add Product
-                </button>
+                <div className="flex items-center gap-3">
+                    <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/10 active:scale-95 text-sm">
+                        <Plus className="w-4 h-4" />
+                        New Listing
+                    </button>
+                </div>
             </div>
 
-            {/* Filters & Search */}
-            <div className="flex flex-col lg:flex-row lg:items-center gap-4 bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+            {/* Quick Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                    { label: 'Total Products', value: '4,120', icon: Box, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+                    { label: 'Active Sellers', value: '184', icon: Store, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
+                    { label: 'Low Stock Alert', value: '32', icon: Filter, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+                    { label: 'Revenue (Today)', value: '$12,450', icon: DollarSign, color: 'text-green-500', bg: 'bg-green-500/10' },
+                ].map((stat, i) => (
+                    <div key={i} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center justify-between group hover:border-slate-700 transition-all shadow-xl backdrop-blur-sm">
+                        <div className="text-left">
+                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{stat.label}</p>
+                            <p className="text-2xl font-bold text-white mt-1">{stat.value}</p>
+                        </div>
+                        <div className={`p-4 rounded-xl ${stat.bg} ${stat.color} group-hover:scale-110 transition-transform`}>
+                            <stat.icon className="w-5 h-5" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Filters bar */}
+            <div className="flex flex-col lg:flex-row lg:items-center gap-4 bg-slate-900/50 p-4 rounded-3xl border border-slate-800/50 backdrop-blur-md">
                 <div className="flex-1 relative group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
                     <input
                         type="text"
-                        placeholder="Search products..."
-                        className="w-full pl-12 pr-4 py-2.5 bg-slate-950/50 border border-slate-800 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                        placeholder="Search product name or shop..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full pl-11 pr-4 py-2.5 bg-slate-950/50 border border-slate-800 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
                     />
                 </div>
                 <div className="flex items-center gap-3">
-                    <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-950/50 border border-slate-800 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
-                        <Filter className="w-5 h-5" />
-                        Filters
+                    <div className="flex items-center gap-2 bg-slate-950/50 border border-slate-800 rounded-xl px-3 py-1">
+                        <Layers className="w-4 h-4 text-slate-500" />
+                        <select
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="bg-transparent border-none text-slate-300 text-sm focus:outline-none py-1.5 cursor-pointer appearance-none min-w-[140px]"
+                        >
+                            <option value="All Categories">All Categories</option>
+                            {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                        </select>
+                    </div>
+                    <button className="p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white transition-all">
+                        <Filter className="w-4 h-4" />
                     </button>
-                    <select className="px-4 py-2.5 bg-slate-950/50 border border-slate-800 rounded-xl text-slate-300 hover:text-white focus:outline-none transition-all">
-                        <option>All Categories</option>
-                        <option>Electronics</option>
-                        <option>Wearables</option>
-                        <option>Accessories</option>
-                    </select>
                 </div>
             </div>
 
-            {/* Product Table */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left">
+            {/* Table Container */}
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm self-start">
+                <div className="overflow-x-auto text-left">
+                    <table className="w-full border-collapse">
                         <thead>
-                            <tr className="bg-slate-950/50 text-slate-400 text-xs font-semibold uppercase tracking-wider">
-                                <th className="px-6 py-4">Product</th>
-                                <th className="px-6 py-4">Category</th>
-                                <th className="px-6 py-4">Price</th>
-                                <th className="px-6 py-4">Stock</th>
-                                <th className="px-6 py-4">Status</th>
-                                <th className="px-6 py-4 text-center">Actions</th>
+                            <tr className="bg-slate-950/50 text-slate-500 text-[10px] font-bold uppercase tracking-widest border-b border-slate-800">
+                                <th className="px-8 py-5">Product Info</th>
+                                <th className="px-8 py-5">Published By</th>
+                                <th className="px-8 py-5 text-center">Price</th>
+                                <th className="px-8 py-5 text-center">Catalog</th>
+                                <th className="px-8 py-5 text-center">Status</th>
+                                <th className="px-8 py-5 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-800">
-                            {products.map((product) => (
-                                <tr key={product.id} className="hover:bg-slate-800/30 transition-colors group">
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-12 h-12 rounded-lg bg-slate-800 border border-slate-700 overflow-hidden shrink-0">
-                                                <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            {filteredProducts.map((product) => (
+                                <tr key={product.id} className="group hover:bg-slate-800/30 transition-all border-b border-slate-800/20 last:border-none">
+                                    <td className="px-8 py-6">
+                                        <div className="flex items-center gap-4">
+                                            <div className="relative">
+                                                <div className="w-14 h-14 rounded-2xl bg-slate-800 border-2 border-slate-800 p-0.5 overflow-hidden group-hover:border-blue-500/50 transition-all shadow-lg">
+                                                    <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                                </div>
                                             </div>
                                             <div className="min-w-0">
-                                                <p className="font-semibold text-white truncate">{product.name}</p>
-                                                <p className="text-xs text-slate-500">ID: {product.id}</p>
+                                                <p className="font-bold text-white text-base leading-tight group-hover:text-blue-400 transition-colors uppercase tracking-tight">{product.name}</p>
+                                                <p className="text-[10px] text-slate-500 font-bold mt-1 tracking-widest">SKU: {product.id}</p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <span className="text-slate-300 text-sm">{product.category}</span>
+                                    <td className="px-8 py-6">
+                                        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-950/50 rounded-xl border border-slate-800/50 w-fit group/shop hover:border-slate-700 transition-all cursor-pointer">
+                                            <Store className="w-3.5 h-3.5 text-blue-500" />
+                                            <span className="text-xs font-bold text-slate-300 group-hover/shop:text-white transition-colors capitalize">{product.shopName}</span>
+                                            <ArrowUpRight className="w-3 h-3 text-slate-600 opacity-0 group-hover/shop:opacity-100 group-hover/shop:translate-x-0.5 group-hover/shop:-translate-y-0.5 transition-all" />
+                                        </div>
                                     </td>
-                                    <td className="px-6 py-4 font-bold text-white">
-                                        {product.price}
+                                    <td className="px-8 py-6 text-center">
+                                        <p className="font-black text-white text-lg tracking-tighter">{product.price}</p>
                                     </td>
-                                    <td className="px-6 py-4 text-slate-400 text-sm">
-                                        {product.stock} units
+                                    <td className="px-8 py-6 text-center">
+                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">In {product.category}</span>
+                                        <p className="text-sm font-bold text-white">{product.stock} <span className="text-slate-500 font-medium">units</span></p>
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${product.status === 'In Stock' ? 'bg-green-500/10 text-green-500' :
-                                                product.status === 'Low Stock' ? 'bg-amber-500/10 text-amber-500' :
-                                                    'bg-red-500/10 text-red-500'
+                                    <td className="px-8 py-6 text-center">
+                                        <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest border transition-all ${product.status === 'In Stock' ? 'bg-green-500/10 text-green-500 border-green-500/20' :
+                                                product.status === 'Low Stock' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20 shadow-lg shadow-amber-500/5' :
+                                                    'bg-red-500/10 text-red-500 border-red-500/20 shadow-lg shadow-red-500/5'
                                             }`}>
                                             {product.status}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center justify-center gap-2">
-                                            <button className="p-2 rounded-lg text-slate-400 hover:text-blue-500 hover:bg-blue-500/10 transition-all">
+                                    <td className="px-8 py-6 text-right">
+                                        <div className="flex items-center justify-end gap-2">
+                                            <button className="p-2.5 bg-slate-950/50 hover:bg-blue-600/10 text-slate-400 hover:text-blue-500 rounded-xl border border-slate-800 transition-all active:scale-90" title="Modify Product">
                                                 <Edit className="w-4 h-4" />
                                             </button>
-                                            <button className="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-all">
-                                                <Trash2 className="w-4 h-4" />
-                                            </button>
-                                            <button className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                                            <button className="p-2.5 bg-slate-950/50 hover:bg-slate-800 text-slate-400 hover:text-white rounded-xl border border-slate-800 transition-all">
                                                 <MoreVertical className="w-4 h-4" />
                                             </button>
                                         </div>
@@ -123,15 +184,15 @@ const ProductPage: React.FC = () => {
                     </table>
                 </div>
 
-                {/* Pagination */}
-                <div className="p-4 border-t border-slate-800 flex items-center justify-between">
-                    <p className="text-sm text-slate-500">Showing 1 to 5 of 24 products</p>
-                    <div className="flex items-center gap-2">
-                        <button className="p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-50 transition-all">
-                            <ChevronLeft className="w-5 h-5" />
+                {/* Footer Controls */}
+                <div className="p-6 border-t border-slate-800 bg-slate-950/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest italic">Showing {filteredProducts.length} of 4,120 indexed items</p>
+                    <div className="flex items-center gap-3">
+                        <button className="px-5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-bold text-slate-500 cursor-not-allowed flex items-center gap-2">
+                            <ChevronLeft className="w-4 h-4" /> Prev
                         </button>
-                        <button className="p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-50 transition-all">
-                            <ChevronRight className="w-5 h-5" />
+                        <button className="px-5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-bold text-slate-300 hover:bg-slate-800 transition-all flex items-center gap-2 shadow-lg">
+                            Next <ChevronRight className="w-4 h-4" />
                         </button>
                     </div>
                 </div>

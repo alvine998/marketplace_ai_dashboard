@@ -18,6 +18,7 @@ import {
     Smartphone,
     Store,
     Shield,
+    ShieldCheck,
     Layers
 } from 'lucide-react';
 
@@ -49,6 +50,7 @@ const MainLayout: React.FC = () => {
             label: 'Settings',
             subItems: [
                 { icon: Shield, label: 'Admin Management', path: '/main/settings/admin' },
+                { icon: ShieldCheck, label: 'Roles & Permissions', path: '/main/settings/roles' },
                 { icon: Smartphone, label: 'Push Notification', path: '/main/push-notifications' },
                 { icon: Layers, label: 'Product Category', path: '/main/settings/categories' },
             ]
