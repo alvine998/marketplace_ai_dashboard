@@ -113,8 +113,8 @@ const AdminManagementPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="text-left">
-                    <h1 className="text-3xl font-bold text-white tracking-tight">Admin Management</h1>
-                    <p className="text-slate-400 mt-1 font-medium">Control access permissions and dashboard user roles.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Admin Management</h1>
+                    <p className="text-slate-500 mt-1 font-medium">Control access permissions and dashboard user roles.</p>
                 </div>
                 <button
                     onClick={() => setShowInviteModal(true)}
@@ -126,8 +126,8 @@ const AdminManagementPage: React.FC = () => {
             </div>
 
             {/* Main Table Container */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-3xl overflow-hidden backdrop-blur-sm self-start shadow-2xl">
-                <div className="p-6 border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden self-start shadow-sm">
+                <div className="p-6 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="relative w-full md:w-80">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                         <input
@@ -135,7 +135,7 @@ const AdminManagementPage: React.FC = () => {
                             placeholder="Search by name or email..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 pl-10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pl-10 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
                         />
                     </div>
                 </div>
@@ -143,7 +143,7 @@ const AdminManagementPage: React.FC = () => {
                 <div className="overflow-x-auto text-left">
                     <table className="w-full">
                         <thead>
-                            <tr className="bg-slate-950/50 text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] border-b border-slate-800/50">
+                            <tr className="bg-slate-50 text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] border-b border-slate-200">
                                 <th className="px-8 py-5">User Account</th>
                                 <th className="px-8 py-5">Auth Role</th>
                                 <th className="px-8 py-5">Activity Status</th>
@@ -151,13 +151,13 @@ const AdminManagementPage: React.FC = () => {
                                 <th className="px-8 py-5 text-right">Access</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800">
+                        <tbody className="divide-y divide-slate-100">
                             {admins.map((user) => (
                                 <tr key={user.id} className="group hover:bg-slate-800/30 transition-all border-b border-slate-800/20 last:border-none">
                                     <td className="px-8 py-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center text-indigo-500 group-hover:scale-110 transition-transform overflow-hidden shadow-inner">
-                                                <img src={`https://ui-avatars.com/api/?name=${user.name}&background=1e293b&color=6366f1`} alt="Avatar" />
+                                            <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-indigo-500 group-hover:scale-110 transition-transform overflow-hidden shadow-inner">
+                                                <img src={`https://ui-avatars.com/api/?name=${user.name}&background=f8fafc&color=6366f1`} alt="Avatar" />
                                             </div>
                                             <div className="text-left">
                                                 <p className="font-bold text-white text-sm leading-tight">{user.name}</p>
@@ -181,10 +181,10 @@ const AdminManagementPage: React.FC = () => {
                                             <button className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-lg transition-all border border-slate-700/50 shadow-sm" title="Manage Permissions">
                                                 <Key className="w-4 h-4" />
                                             </button>
-                                            <button className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-lg transition-all border border-slate-700/50 shadow-sm" title="Edit Associate">
+                                            <button className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-lg transition-all border border-slate-200 shadow-sm" title="Edit Associate">
                                                 <Edit3 className="w-4 h-4" />
                                             </button>
-                                            <button className="p-2 bg-slate-800 hover:bg-red-500/10 text-slate-400 hover:text-red-500 rounded-lg transition-all border border-slate-700/50 shadow-sm" title="Disable Access">
+                                            <button className="p-2 bg-slate-50 hover:bg-red-50 text-slate-500 hover:text-red-500 rounded-lg transition-all border border-slate-200 shadow-sm" title="Disable Access">
                                                 <Trash2 className="w-4 h-4" />
                                             </button>
                                         </div>
@@ -199,11 +199,11 @@ const AdminManagementPage: React.FC = () => {
             {/* Invite Modal */}
             {showInviteModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setShowInviteModal(false)} />
-                    <div className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-[2.5rem] shadow-2xl p-8 animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 text-left">
+                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setShowInviteModal(false)} />
+                    <div className="relative w-full max-w-lg bg-white border border-slate-200 rounded-[2.5rem] shadow-2xl p-8 animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 text-left">
                         <div className="flex items-center justify-between mb-8">
                             <div>
-                                <h2 className="text-2xl font-bold text-white">Invite Associate</h2>
+                                <h2 className="text-2xl font-bold text-slate-900">Invite Associate</h2>
                                 <p className="text-slate-500 text-sm font-medium mt-1">Grant administrative access to your dashboard</p>
                             </div>
                             <div className="p-3 bg-indigo-600/10 rounded-2xl border border-indigo-500/20">
@@ -217,7 +217,7 @@ const AdminManagementPage: React.FC = () => {
                                 <input
                                     type="text"
                                     placeholder="Enter collaborator name"
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-3.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
                                     value={newAdmin.name}
                                     onChange={(e) => setNewAdmin({ ...newAdmin, name: e.target.value })}
                                 />
@@ -227,7 +227,7 @@ const AdminManagementPage: React.FC = () => {
                                 <input
                                     type="email"
                                     placeholder="associate@marketai.com"
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-3.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-['Inter']"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-['Inter']"
                                     value={newAdmin.email}
                                     onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
                                 />
@@ -242,13 +242,13 @@ const AdminManagementPage: React.FC = () => {
                                             onClick={() => setNewAdmin({ ...newAdmin, role })}
                                             className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 group ${newAdmin.role === role
                                                 ? 'bg-indigo-600 border-indigo-500 shadow-lg shadow-indigo-600/20'
-                                                : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                                                : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                                                 }`}
                                         >
-                                            {role === 'Super Admin' && <ShieldCheck className={`w-5 h-5 ${newAdmin.role === role ? 'text-white' : 'text-slate-500 group-hover:text-indigo-400'}`} />}
-                                            {role === 'Editor' && <Shield className={`w-5 h-5 ${newAdmin.role === role ? 'text-white' : 'text-slate-500 group-hover:text-indigo-400'}`} />}
-                                            {role === 'Viewer' && <User className={`w-5 h-5 ${newAdmin.role === role ? 'text-white' : 'text-slate-500 group-hover:text-indigo-400'}`} />}
-                                            <span className={`text-[10px] font-bold uppercase tracking-widest ${newAdmin.role === role ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`}>{role}</span>
+                                            {role === 'Super Admin' && <ShieldCheck className={`w-5 h-5 ${newAdmin.role === role ? 'text-white' : 'text-slate-400 group-hover:text-indigo-500'}`} />}
+                                            {role === 'Editor' && <Shield className={`w-5 h-5 ${newAdmin.role === role ? 'text-white' : 'text-slate-400 group-hover:text-indigo-500'}`} />}
+                                            {role === 'Viewer' && <User className={`w-5 h-5 ${newAdmin.role === role ? 'text-white' : 'text-slate-400 group-hover:text-indigo-500'}`} />}
+                                            <span className={`text-[10px] font-bold uppercase tracking-widest ${newAdmin.role === role ? 'text-white' : 'text-slate-500 group-hover:text-slate-900'}`}>{role}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -273,7 +273,7 @@ const AdminManagementPage: React.FC = () => {
                         <div className="mt-10 flex gap-3">
                             <button
                                 onClick={() => setShowInviteModal(false)}
-                                className="flex-1 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl transition-all shadow-lg active:scale-95 text-xs uppercase tracking-widest"
+                                className="flex-1 py-4 bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold rounded-2xl transition-all active:scale-95 text-xs uppercase tracking-widest"
                             >
                                 Cancel
                             </button>

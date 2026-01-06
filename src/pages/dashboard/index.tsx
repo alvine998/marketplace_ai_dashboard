@@ -28,16 +28,16 @@ const DashboardPage: React.FC = () => {
         <div className="space-y-8 animate-in fade-in duration-500">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-bold text-white tracking-tight">Overview</h1>
-                <p className="text-slate-400 mt-1">Detailed management of your marketplace performance.</p>
+                <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Overview</h1>
+                <p className="text-slate-500 mt-1">Detailed management of your marketplace performance.</p>
             </div>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, i) => (
-                    <div key={i} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-sm hover:border-slate-700 transition-colors">
+                    <div key={i} className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm hover:border-slate-300 transition-colors">
                         <div className="flex items-center justify-between mb-4">
-                            <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-blue-500">
+                            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-blue-500">
                                 <stat.icon className="w-5 h-5" />
                             </div>
                             <span className={`text-xs font-medium px-2 py-1 rounded-full ${stat.positive ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
@@ -45,8 +45,8 @@ const DashboardPage: React.FC = () => {
                                 {stat.change}
                             </span>
                         </div>
-                        <p className="text-sm text-slate-400 font-medium">{stat.label}</p>
-                        <p className="text-2xl font-bold text-white mt-1">{stat.value}</p>
+                        <p className="text-sm text-slate-500 font-medium">{stat.label}</p>
+                        <p className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</p>
                     </div>
                 ))}
             </div>
@@ -54,17 +54,17 @@ const DashboardPage: React.FC = () => {
             {/* Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Recent Orders Table */}
-                <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-                    <div className="p-6 border-b border-slate-800 flex items-center justify-between">
-                        <h2 className="text-lg font-bold text-white">Recent Transactions</h2>
-                        <button className="text-slate-500 hover:text-white transition-colors">
+                <div className="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+                    <div className="p-6 border-b border-slate-200 flex items-center justify-between">
+                        <h2 className="text-lg font-bold text-slate-900">Recent Transactions</h2>
+                        <button className="text-slate-500 hover:text-slate-900 transition-colors">
                             <MoreHorizontal className="w-5 h-5" />
                         </button>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
-                                <tr className="bg-slate-950/50 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                                <tr className="bg-slate-50 text-slate-500 text-xs font-semibold uppercase tracking-wider">
                                     <th className="px-6 py-4">Order ID</th>
                                     <th className="px-6 py-4">Customer</th>
                                     <th className="px-6 py-4">Product</th>
@@ -72,13 +72,13 @@ const DashboardPage: React.FC = () => {
                                     <th className="px-6 py-4">Status</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-800">
+                            <tbody className="divide-y divide-slate-100">
                                 {recentOrders.map((order, i) => (
-                                    <tr key={i} className="hover:bg-slate-800/30 transition-colors text-sm">
-                                        <td className="px-6 py-4 font-medium text-white">{order.id}</td>
-                                        <td className="px-6 py-4 text-slate-300">{order.customer}</td>
-                                        <td className="px-6 py-4 text-slate-400">{order.product}</td>
-                                        <td className="px-6 py-4 font-semibold text-white">{order.amount}</td>
+                                    <tr key={i} className="hover:bg-slate-50 transition-colors text-sm">
+                                        <td className="px-6 py-4 font-medium text-slate-900">{order.id}</td>
+                                        <td className="px-6 py-4 text-slate-600">{order.customer}</td>
+                                        <td className="px-6 py-4 text-slate-500">{order.product}</td>
+                                        <td className="px-6 py-4 font-semibold text-slate-900">{order.amount}</td>
                                         <td className="px-6 py-4">
                                             <span className={`px-2 py-1 rounded-lg text-xs font-medium ${order.status === 'Completed' ? 'bg-green-500/10 text-green-500' :
                                                 order.status === 'Pending' ? 'bg-amber-500/10 text-amber-500' :
@@ -95,10 +95,10 @@ const DashboardPage: React.FC = () => {
                 </div>
 
                 {/* Growth Analytics Chart */}
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col">
+                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 flex flex-col">
                     <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h2 className="text-lg font-bold text-white">Growth Analytics</h2>
+                            <h2 className="text-lg font-bold text-slate-900">Growth Analytics</h2>
                             <p className="text-xs text-slate-500 mt-0.5">Revenue growth over the last 7 days</p>
                         </div>
                         <div className="flex items-center gap-2">
@@ -137,17 +137,17 @@ const DashboardPage: React.FC = () => {
                             <div key={i} className="group relative flex flex-col items-center gap-2 flex-1">
                                 <div
                                     style={{ height: `${h}%` }}
-                                    className="w-full max-w-[12px] bg-slate-800/50 rounded-t-full transition-all duration-500 group-hover:bg-blue-600/50 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] cursor-pointer"
+                                    className="w-full max-w-[12px] bg-slate-100 rounded-t-full transition-all duration-500 group-hover:bg-blue-600/50 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] cursor-pointer"
                                 />
-                                <span className="text-[10px] font-bold text-slate-600 uppercase tracking-tighter">Day {i + 1}</span>
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Day {i + 1}</span>
                             </div>
                         ))}
                     </div>
 
-                    <div className="mt-6 pt-6 border-t border-slate-800/50 grid grid-cols-2 gap-4">
+                    <div className="mt-6 pt-6 border-t border-slate-100 grid grid-cols-2 gap-4">
                         <div className="text-left">
-                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Avg. Daily</p>
-                            <p className="text-xl font-bold text-white mt-0.5">$1,240</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Avg. Daily</p>
+                            <p className="text-xl font-bold text-slate-900 mt-0.5">$1,240</p>
                         </div>
                         <div className="text-left">
                             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Projection</p>
