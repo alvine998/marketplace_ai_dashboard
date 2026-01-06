@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -26,6 +26,9 @@ const MainLayout: React.FC = () => {
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [expandedMenus, setExpandedMenus] = useState<string[]>(['Settings']);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const searchRef = useRef<HTMLDivElement>(null);
     const location = useLocation();
 
     const handleLogout = () => {
@@ -38,7 +41,27 @@ const MainLayout: React.FC = () => {
         );
     };
 
-    const menuItems = [
+    interface SubMenuItem {
+        icon: any;
+        label: string;
+        path: string;
+    }
+
+    interface MenuItem {
+        icon: any;
+        label: string;
+        path?: string;
+        subItems?: SubMenuItem[];
+    }
+
+    interface SearchableItem {
+        label: string;
+        path: string;
+        icon: any;
+        parent: string | null;
+    }
+
+    const menuItems: MenuItem[] = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/main/dashboard' },
         { icon: MessageSquare, label: 'AI Chat Orders', path: '/main/ai-orders' },
         { icon: Megaphone, label: 'Promotions', path: '/main/promos' },
@@ -56,6 +79,63 @@ const MainLayout: React.FC = () => {
             ]
         },
     ];
+
+    const searchableItems: SearchableItem[] = menuItems.flatMap(item => {
+        if (item.subItems) {
+            return item.subItems.map(sub => ({
+                label: sub.label,
+                path: sub.path,
+                icon: sub.icon,
+                parent: item.label
+            })) as SearchableItem[];
+        }
+        return [{
+            label: item.label,
+            path: item.path || '#',
+            icon: item.icon,
+            parent: null
+        }] as SearchableItem[];
+    });
+
+    const searchResults = searchQuery.trim() === ''
+        ? []
+        : searchableItems.filter(item =>
+            item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (item.parent && item.parent.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                const searchInput = document.getElementById('global-search') as HTMLInputElement;
+                searchInput?.focus();
+            }
+            if (e.key === 'Escape') {
+                setIsSearchFocused(false);
+                setSearchQuery('');
+            }
+        };
+
+        const handleClickOutside = (e: MouseEvent) => {
+            if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+                setIsSearchFocused(false);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const handleSearchResultClick = (path: string) => {
+        navigate(path);
+        setSearchQuery('');
+        setIsSearchFocused(false);
+    };
 
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex">
@@ -153,13 +233,61 @@ const MainLayout: React.FC = () => {
                         >
                             {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>
-                        <div className="hidden md:flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-xl px-4 py-1.5 w-64 group focus-within:ring-2 focus-within:ring-blue-500/50 transition-all">
-                            <Search className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500" />
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                                className="bg-transparent border-none text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full"
-                            />
+                        <div ref={searchRef} className="relative hidden md:block">
+                            <div className="flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-xl px-4 py-1.5 w-80 group focus-within:ring-2 focus-within:ring-blue-500/50 transition-all">
+                                <Search className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500" />
+                                <input
+                                    id="global-search"
+                                    type="text"
+                                    placeholder="Search features... (⌘K)"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onFocus={() => setIsSearchFocused(true)}
+                                    className="bg-transparent border-none text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full"
+                                />
+                            </div>
+
+                            {/* Search Results Dropdown */}
+                            {isSearchFocused && (searchQuery || searchResults.length > 0) && (
+                                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                    {searchResults.length > 0 ? (
+                                        <div className="py-2">
+                                            <div className="px-4 py-2 border-b border-slate-50">
+                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Search Results</p>
+                                            </div>
+                                            <div className="max-h-[320px] overflow-y-auto custom-scrollbar">
+                                                {searchResults.map((result) => (
+                                                    <button
+                                                        key={result.path}
+                                                        onClick={() => handleSearchResultClick(result.path!)}
+                                                        className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors group text-left"
+                                                    >
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="p-2 rounded-lg bg-slate-100 text-slate-400 group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                                                                <result.icon className="w-4 h-4" />
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-sm font-bold text-slate-900">{result.label}</p>
+                                                                {result.parent && (
+                                                                    <p className="text-[10px] text-slate-500">{result.parent}</p>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors" />
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ) : searchQuery.trim() !== '' ? (
+                                        <div className="p-8 text-center">
+                                            <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mx-auto mb-3">
+                                                <Search className="w-6 h-6 text-slate-300" />
+                                            </div>
+                                            <p className="text-sm text-slate-500">No results found for "<span className="text-slate-900 font-bold">{searchQuery}</span>"</p>
+                                        </div>
+                                    ) : null}
+                                </div>
+                            )}
                         </div>
                     </div>
 

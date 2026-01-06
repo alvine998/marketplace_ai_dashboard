@@ -153,14 +153,14 @@ const AdminManagementPage: React.FC = () => {
                         </thead>
                         <tbody className="divide-y divide-slate-100">
                             {admins.map((user) => (
-                                <tr key={user.id} className="group hover:bg-slate-800/30 transition-all border-b border-slate-800/20 last:border-none">
+                                <tr key={user.id} className="group hover:bg-slate-50 transition-all border-b border-slate-100 last:border-none">
                                     <td className="px-8 py-6">
                                         <div className="flex items-center gap-4">
                                             <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-indigo-500 group-hover:scale-110 transition-transform overflow-hidden shadow-inner">
                                                 <img src={`https://ui-avatars.com/api/?name=${user.name}&background=f1f5f9&color=6366f1`} alt="Avatar" />
                                             </div>
                                             <div className="text-left">
-                                                <p className="font-bold text-white text-sm leading-tight">{user.name}</p>
+                                                <p className="font-bold text-slate-900 text-sm leading-tight">{user.name}</p>
                                                 <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1.5 font-medium italic font-['Inter']">
                                                     <Mail className="w-3 h-3" /> {user.email}
                                                 </p>
@@ -178,7 +178,7 @@ const AdminManagementPage: React.FC = () => {
                                     </td>
                                     <td className="px-8 py-6 text-right">
                                         <div className="flex items-center justify-end gap-2 opactiy-60 group-hover:opacity-100 transition-opacity">
-                                            <button className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-lg transition-all border border-slate-700/50 shadow-sm" title="Manage Permissions">
+                                            <button className="p-2 bg-white hover:bg-slate-50 text-slate-400 hover:text-blue-600 rounded-lg transition-all border border-slate-200 shadow-sm" title="Manage Permissions">
                                                 <Key className="w-4 h-4" />
                                             </button>
                                             <button className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-lg transition-all border border-slate-200 shadow-sm" title="Edit Associate">
@@ -255,14 +255,14 @@ const AdminManagementPage: React.FC = () => {
                             </div>
 
                             {/* Role Permissions Box */}
-                            <div className="bg-slate-950/50 border border-slate-800 rounded-3xl p-5">
-                                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+                            <div className="bg-slate-50 border border-slate-100 rounded-3xl p-5">
+                                <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
                                     <Key className="w-3.5 h-3.5 text-indigo-500" /> Authorized Capabilities
                                 </h4>
                                 <ul className="grid grid-cols-1 gap-3">
                                     {rolePermissions[newAdmin.role].map((perm, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-xs font-medium text-slate-500">
-                                            <CheckCircle2 className="w-3.5 h-3.5 text-green-500/50" />
+                                        <li key={i} className="flex items-center gap-3 text-xs font-medium text-slate-600">
+                                            <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
                                             {perm}
                                         </li>
                                     ))}
