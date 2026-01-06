@@ -65,13 +65,13 @@ const NotificationsPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="text-left">
-                    <h1 className="text-3xl font-bold text-white tracking-tight">Notifications</h1>
-                    <p className="text-slate-400 mt-1">Stay updated with everything happening in your marketplace.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Notifications</h1>
+                    <p className="text-slate-500 mt-1">Stay updated with everything happening in your marketplace.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <button
                         onClick={markAllRead}
-                        className="flex items-center gap-2 px-4 py-2 bg-slate-800/50 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl border border-slate-700/50 transition-all text-sm font-medium"
+                        className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 rounded-xl border border-slate-200 shadow-sm transition-all text-sm font-medium"
                     >
                         <CheckCheck className="w-4 h-4" />
                         Mark all as read
@@ -80,15 +80,15 @@ const NotificationsPage: React.FC = () => {
             </div>
 
             {/* Tabs & Search */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-900/30 p-2 rounded-2xl border border-slate-800/50">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm">
                 <div className="flex items-center gap-1 overflow-x-auto w-full md:w-auto no-scrollbar">
                     {['all', 'system', 'sale', 'ai', 'alert'].map((t) => (
                         <button
                             key={t}
                             onClick={() => setFilter(t as any)}
                             className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${filter === t
-                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
-                                    : 'text-slate-500 hover:text-slate-300'
+                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                 }`}
                         >
                             {t}
@@ -100,7 +100,7 @@ const NotificationsPage: React.FC = () => {
                     <input
                         type="text"
                         placeholder="Search alerts..."
-                        className="w-full pl-10 pr-4 py-2 bg-slate-950/50 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
+                        className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
                     />
                 </div>
             </div>
@@ -113,22 +113,22 @@ const NotificationsPage: React.FC = () => {
                             key={n.id}
                             onClick={() => navigate(`/main/notifications/${n.id}`)}
                             className={`group flex items-start gap-4 p-5 rounded-2xl border transition-all cursor-pointer relative overflow-hidden ${n.isRead
-                                    ? 'bg-slate-900/20 border-slate-800/50 opacity-80'
-                                    : 'bg-slate-900/40 border-slate-700/50 shadow-lg shadow-blue-500/5'
-                                } hover:border-slate-600 hover:bg-slate-800/40`}
+                                ? 'bg-white/50 border-slate-200 opacity-80'
+                                : 'bg-white border-slate-200 shadow-sm shadow-blue-500/5'
+                                } hover:border-slate-300 hover:bg-slate-50`}
                         >
                             {!n.isRead && (
                                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500" />
                             )}
 
-                            <div className={`p-3 rounded-xl shrink-0 ${n.isRead ? 'bg-slate-950/50' : 'bg-slate-950 shadow-inner'
+                            <div className={`p-3 rounded-xl shrink-0 ${n.isRead ? 'bg-slate-50' : 'bg-slate-100 shadow-inner'
                                 }`}>
                                 {getIcon(n.type)}
                             </div>
 
                             <div className="flex-1 min-w-0 text-left">
                                 <div className="flex items-center justify-between mb-1">
-                                    <h3 className={`text-sm font-bold truncate ${n.isRead ? 'text-slate-300' : 'text-white'}`}>
+                                    <h3 className={`text-sm font-bold truncate ${n.isRead ? 'text-slate-600' : 'text-slate-900'}`}>
                                         {n.title}
                                     </h3>
                                     <span className="text-[10px] font-medium text-slate-500 flex items-center gap-1.5 shrink-0 ml-4">
@@ -143,7 +143,7 @@ const NotificationsPage: React.FC = () => {
                             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                     onClick={(e) => deleteNotification(e, n.id)}
-                                    className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all"
+                                    className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </button>
@@ -152,7 +152,7 @@ const NotificationsPage: React.FC = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="text-center py-20 bg-slate-900/20 rounded-3xl border border-dashed border-slate-800">
+                    <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-200">
                         <Bell className="w-12 h-12 text-slate-700 mx-auto mb-4" />
                         <p className="text-slate-500 font-medium">No notifications found in this category.</p>
                     </div>

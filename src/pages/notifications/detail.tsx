@@ -44,28 +44,28 @@ const NotificationDetailPage: React.FC = () => {
             <div className="flex items-center justify-between">
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group"
+                    className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors group"
                 >
                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                     <span className="font-medium">Back to Inbox</span>
                 </button>
                 <div className="flex items-center gap-2">
-                    <button className="p-2.5 bg-slate-900 border border-slate-800 text-slate-400 hover:text-red-500 rounded-xl transition-all">
+                    <button className="p-2.5 bg-white border border-slate-200 text-slate-400 hover:text-red-500 rounded-xl shadow-sm transition-all">
                         <Trash2 className="w-5 h-5" />
                     </button>
-                    <button className="p-2.5 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded-xl transition-all">
+                    <button className="p-2.5 bg-white border border-slate-200 text-slate-400 hover:text-slate-900 rounded-xl shadow-sm transition-all">
                         <Share2 className="w-5 h-5" />
                     </button>
                 </div>
             </div>
 
             {/* Content Card */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-[2.5rem] overflow-hidden backdrop-blur-md shadow-2xl">
+            <div className="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
                 <div className="p-8 sm:p-12">
                     {/* Badge & Meta */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
                         <div className="flex items-center gap-5">
-                            <div className="p-4 bg-slate-950 rounded-3xl shadow-inner border border-slate-800/50">
+                            <div className="p-4 bg-slate-50 rounded-3xl shadow-inner border border-slate-100">
                                 {getIcon(notification.type)}
                             </div>
                             <div className="text-left">
@@ -84,31 +84,31 @@ const NotificationDetailPage: React.FC = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-2 bg-slate-950/50 px-4 py-2 rounded-2xl border border-slate-800/50">
+                        <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
                             <CheckCircle2 className="w-4 h-4 text-green-500" />
-                            <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Verified Event</span>
+                            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Verified Event</span>
                         </div>
                     </div>
 
                     {/* Text Content */}
                     <div className="space-y-6 text-left">
-                        <h2 className="text-3xl font-bold text-white leading-tight tracking-tight">
+                        <h2 className="text-3xl font-bold text-slate-900 leading-tight tracking-tight">
                             {notification.title}
                         </h2>
-                        <div className="prose prose-invert max-w-none">
-                            <p className="text-slate-400 text-lg leading-relaxed whitespace-pre-wrap">
+                        <div className="prose max-w-none">
+                            <p className="text-slate-600 text-lg leading-relaxed whitespace-pre-wrap">
                                 {notification.message}
                             </p>
                         </div>
                     </div>
 
                     {/* CTA / Actions */}
-                    <div className="mt-12 pt-10 border-t border-slate-800/50 flex flex-col sm:flex-row gap-4">
+                    <div className="mt-12 pt-10 border-t border-slate-100 flex flex-col sm:flex-row gap-4">
                         <button className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl transition-all shadow-lg shadow-blue-500/20 active:scale-95">
                             Go to Order Detail
                             <ExternalLink className="w-5 h-5" />
                         </button>
-                        <button className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl transition-all border border-slate-700/50 active:scale-95">
+                        <button className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold rounded-2xl transition-all active:scale-95">
                             Mark as Resolved
                         </button>
                     </div>

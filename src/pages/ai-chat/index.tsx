@@ -34,22 +34,22 @@ const AIChatPage: React.FC = () => {
     ];
 
     return (
-        <div className="h-[calc(screen-120px)] flex bg-slate-950/20 rounded-3xl overflow-hidden border border-slate-800 backdrop-blur-sm animate-in fade-in duration-700">
+        <div className="h-[calc(screen-120px)] flex bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm animate-in fade-in duration-700">
             {/* Left Sidebar - Chat List */}
-            <div className="w-80 border-r border-slate-800 flex flex-col bg-slate-900/40">
-                <div className="p-6 border-b border-slate-800">
+            <div className="w-80 border-r border-slate-200 flex flex-col bg-slate-50/50">
+                <div className="p-6 border-b border-slate-200">
                     <div className="flex items-center justify-between mb-4 text-left">
-                        <h2 className="font-bold text-slate-500 uppercase tracking-widest text-[10px]">Buyer Messages</h2>
-                        <button className="text-slate-500 hover:text-white transition-colors">
+                        <h2 className="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Buyer Messages</h2>
+                        <button className="text-slate-400 hover:text-slate-900 transition-colors">
                             <History className="w-5 h-5" />
                         </button>
                     </div>
                     <div className="relative group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                         <input
                             type="text"
                             placeholder="Search chats..."
-                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                            className="w-full bg-white border border-slate-200 rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-slate-900 placeholder-slate-400"
                         />
                     </div>
                 </div>
@@ -58,23 +58,23 @@ const AIChatPage: React.FC = () => {
                         <button
                             key={chat.id}
                             onClick={() => setSelectedChat(chat.id)}
-                            className={`w-full p-4 flex gap-3 hover:bg-slate-800/50 transition-all border-b border-slate-800/50 relative ${selectedChat === chat.id ? 'bg-blue-600/10 border-r-2 border-r-blue-500' : ''}`}
+                            className={`w-full p-4 flex gap-3 hover:bg-slate-100/50 transition-all border-b border-slate-200/50 relative ${selectedChat === chat.id ? 'bg-blue-50 border-r-2 border-r-blue-500' : ''}`}
                         >
                             <div className="relative">
-                                <div className="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
                                     <User className="w-6 h-6 text-slate-400" />
                                 </div>
                                 {chat.unread && (
-                                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-slate-900" />
+                                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white" />
                                 )}
                             </div>
                             <div className="flex-1 text-left min-w-0">
                                 <div className="flex justify-between items-start mb-1">
-                                    <p className="font-semibold text-white text-sm truncate">{chat.name}</p>
-                                    <span className="text-[10px] text-slate-500">{chat.time}</span>
+                                    <p className="font-semibold text-slate-900 text-sm truncate">{chat.name}</p>
+                                    <span className="text-[10px] text-slate-400">{chat.time}</span>
                                 </div>
-                                <p className="text-xs text-slate-400 truncate mb-1">{chat.lastMsg}</p>
-                                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium ${chat.status === 'Completed' ? 'bg-slate-800 text-slate-400' : 'bg-blue-500/10 text-blue-400'
+                                <p className="text-xs text-slate-500 truncate mb-1">{chat.lastMsg}</p>
+                                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium ${chat.status === 'Completed' ? 'bg-slate-200 text-slate-500' : 'bg-blue-100 text-blue-600'
                                     }`}>
                                     {chat.status}
                                 </span>
@@ -85,26 +85,26 @@ const AIChatPage: React.FC = () => {
             </div>
 
             {/* Main Chat Area */}
-            <div className="flex-1 flex flex-col min-w-0 bg-slate-900/20">
+            <div className="flex-1 flex flex-col min-w-0 bg-slate-50/30">
                 {/* Chat Header */}
-                <div className="h-16 px-6 border-b border-slate-800 flex items-center justify-between">
+                <div className="h-16 px-6 border-b border-slate-200 flex items-center justify-between bg-white">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
-                            <User className="w-4 h-4 text-slate-300" />
+                        <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                            <User className="w-4 h-4 text-slate-500" />
                         </div>
                         <div>
-                            <p className="text-sm font-bold text-white">John Doe</p>
-                            <p className="text-[10px] text-green-500 flex items-center gap-1">
+                            <p className="text-sm font-bold text-slate-900">John Doe</p>
+                            <p className="text-[10px] text-green-600 flex items-center gap-1 font-medium">
                                 <Circle className="w-1.5 h-1.5 fill-current" /> Online
                             </p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2 bg-blue-500/10 text-blue-400 px-3 py-1.5 rounded-full border border-blue-500/20">
+                        <div className="flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full border border-blue-100">
                             <Sparkles className="w-3.5 h-3.5" />
                             <span className="text-xs font-bold uppercase tracking-widest">AI Responding</span>
                         </div>
-                        <button className="text-slate-500 hover:text-white transition-colors">
+                        <button className="text-slate-400 hover:text-slate-900 transition-colors">
                             <MoreVertical className="w-5 h-5" />
                         </button>
                     </div>
@@ -116,8 +116,8 @@ const AIChatPage: React.FC = () => {
                         <div key={msg.id} className={`flex ${msg.sender === 'buyer' ? 'justify-start' : 'justify-end'}`}>
                             <div className={`max-w-[70%] group ${msg.sender === 'buyer' ? 'order-1' : 'order-2'}`}>
                                 <div className={`p-4 rounded-2xl relative ${msg.sender === 'buyer'
-                                    ? 'bg-slate-800 text-slate-200 rounded-tl-none'
-                                    : 'bg-linear-to-br from-blue-600 to-indigo-600 text-white rounded-tr-none shadow-lg shadow-blue-500/10'
+                                    ? 'bg-white border border-slate-200 text-slate-600 rounded-tl-none shadow-sm'
+                                    : 'bg-indigo-600 text-white rounded-tr-none shadow-lg shadow-indigo-500/20'
                                     }`}>
                                     {msg.sender === 'ai' && (
                                         <div className="absolute -top-7 right-0 text-[10px] font-bold text-blue-400 flex items-center gap-1">
@@ -125,7 +125,7 @@ const AIChatPage: React.FC = () => {
                                         </div>
                                     )}
                                     <p className="text-sm leading-relaxed">{msg.text}</p>
-                                    <p className={`text-[10px] mt-2 ${msg.sender === 'buyer' ? 'text-slate-500' : 'text-blue-100'}`}>
+                                    <p className={`text-[10px] mt-2 ${msg.sender === 'buyer' ? 'text-slate-400' : 'text-blue-100'}`}>
                                         {msg.time}
                                     </p>
                                 </div>
@@ -133,24 +133,24 @@ const AIChatPage: React.FC = () => {
                         </div>
                     ))}
                     <div className="flex justify-center">
-                        <div className="bg-slate-800/50 border border-slate-700 px-4 py-2 rounded-full flex items-center gap-2">
+                        <div className="bg-white border border-slate-200 px-4 py-2 rounded-full flex items-center gap-2 shadow-sm">
                             <div className="flex gap-1">
                                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                             </div>
-                            <span className="text-[10px] text-slate-400 font-medium">AI is crafting a response...</span>
+                            <span className="text-[10px] text-slate-500 font-medium font-['Inter']">AI is crafting a response...</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Message Input */}
-                <div className="p-6 border-t border-slate-800">
+                <div className="p-6 border-t border-slate-200 bg-white">
                     <div className="relative group">
                         <textarea
                             placeholder="Manually reply or let AI handle it..."
                             rows={1}
-                            className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl py-4 pl-6 pr-32 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none group-focus-within:border-blue-500/50"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-6 pr-32 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none group-focus-within:border-blue-500/50 text-slate-900 placeholder-slate-400"
                         />
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
                             <button className="p-2 text-slate-500 hover:text-white transition-colors">
@@ -165,10 +165,10 @@ const AIChatPage: React.FC = () => {
             </div>
 
             {/* Right Panel - AI Configuration */}
-            <div className="w-72 border-l border-slate-800 flex flex-col bg-slate-900/40">
-                <div className="p-6 border-b border-slate-800 flex items-center gap-2">
+            <div className="w-72 border-l border-slate-200 flex flex-col bg-slate-50/50">
+                <div className="p-6 border-b border-slate-200 flex items-center gap-2 bg-white">
                     <Settings2 className="w-5 h-5 text-blue-500" />
-                    <h2 className="text-sm font-bold text-white uppercase tracking-widest">AI Settings</h2>
+                    <h2 className="text-sm font-bold text-slate-900 uppercase tracking-widest">AI Settings</h2>
                 </div>
                 <div className="flex-1 overflow-y-auto p-6 space-y-8">
                     {/* Status Toggle */}

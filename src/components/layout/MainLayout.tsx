@@ -149,7 +149,7 @@ const MainLayout: React.FC = () => {
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                            className="lg:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-400 transition-colors"
+                            className="lg:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
                         >
                             {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>

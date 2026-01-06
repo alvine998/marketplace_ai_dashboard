@@ -28,16 +28,16 @@ const AIChatOrdersPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white tracking-tight">AI Chat Orders</h1>
-                    <p className="text-slate-400 mt-1">Management of all users who purchased AI features.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">AI Chat Orders</h1>
+                    <p className="text-slate-500 mt-1">Management of all users who purchased AI features.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <button className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-xl border border-slate-700 transition-all">
+                    <button className="flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-600 font-medium rounded-xl border border-slate-200 shadow-sm transition-all">
                         <Download className="w-4 h-4" />
                         Export CSV
                     </button>
-                    <div className="bg-linear-to-tr from-blue-600 to-indigo-600 p-px rounded-xl">
-                        <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-transparent text-white font-semibold rounded-[11px] transition-all">
+                    <div className="bg-indigo-600 p-px rounded-xl">
+                        <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white hover:bg-slate-50 text-indigo-600 font-semibold rounded-[11px] transition-all">
                             <TrendingUp className="w-4 h-4" />
                             View Revenue
                         </button>
@@ -52,13 +52,13 @@ const AIChatOrdersPage: React.FC = () => {
                     { label: 'Monthly AI Revenue', val: '$14,520', color: 'text-blue-400', icon: CreditCard },
                     { label: 'Pending Renewals', val: '43', color: 'text-amber-400', icon: Timer },
                 ].map((stat, i) => (
-                    <div key={i} className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl flex items-center gap-4">
-                        <div className={`p-3 rounded-xl bg-slate-950/80 border border-slate-800 ${stat.color}`}>
+                    <div key={i} className="bg-white border border-slate-200 p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+                        <div className={`p-3 rounded-xl bg-slate-50 border border-slate-100 ${stat.color}`}>
                             <stat.icon className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{stat.label}</p>
-                            <p className="text-2xl font-bold text-white mt-0.5">{stat.val}</p>
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                            <p className="text-2xl font-bold text-slate-900 mt-0.5">{stat.val}</p>
                         </div>
                     </div>
                 ))}
@@ -71,21 +71,21 @@ const AIChatOrdersPage: React.FC = () => {
                     <input
                         type="text"
                         placeholder="Search by User, Email, or Order ID..."
-                        className="w-full pl-12 pr-4 py-3 bg-slate-900/50 border border-slate-800 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                        className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all shadow-sm font-['Inter']"
                     />
                 </div>
-                <button className="px-6 py-3 bg-slate-900/50 border border-slate-800 rounded-2xl text-slate-300 hover:text-white flex items-center gap-2 transition-all">
+                <button className="px-6 py-3 bg-white border border-slate-200 rounded-2xl text-slate-500 hover:text-slate-900 flex items-center gap-2 transition-all shadow-sm">
                     <Filter className="w-5 h-5" />
                     More Filters
                 </button>
             </div>
 
             {/* Orders Table */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm">
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
-                            <tr className="bg-slate-950/50 text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">
+                            <tr className="bg-slate-50 text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">
                                 <th className="px-6 py-5">Order Info</th>
                                 <th className="px-6 py-5">User / Merchant</th>
                                 <th className="px-6 py-5">Plan Detail</th>
@@ -95,9 +95,9 @@ const AIChatOrdersPage: React.FC = () => {
                                 <th className="px-6 py-5 text-center">Action</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800/50">
+                        <tbody className="divide-y divide-slate-100">
                             {orders.map((order) => (
-                                <tr key={order.id} className="hover:bg-slate-800/30 transition-all group">
+                                <tr key={order.id} className="hover:bg-slate-50 transition-all group">
                                     <td className="px-6 py-4">
                                         <p className="text-sm font-bold text-blue-400">{order.id}</p>
                                         <p className="text-[10px] text-slate-500 mt-0.5 flex items-center gap-1">
@@ -106,21 +106,21 @@ const AIChatOrdersPage: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
+                                            <div className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
                                                 <User className="w-5 h-5 text-slate-400" />
                                             </div>
                                             <div className="min-w-0">
-                                                <p className="text-sm font-bold text-white truncate">{order.user}</p>
+                                                <p className="text-sm font-bold text-slate-900 truncate">{order.user}</p>
                                                 <p className="text-xs text-slate-500 truncate">{order.email}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="text-xs font-medium text-slate-300 px-2 py-1 bg-slate-800/50 rounded-lg border border-slate-700">
+                                        <span className="text-xs font-medium text-slate-600 px-2 py-1 bg-slate-50 rounded-lg border border-slate-100">
                                             {order.plan}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 font-bold text-white decoration-blue-500/30 underline-offset-4 decoration-2">
+                                    <td className="px-6 py-4 font-bold text-slate-900">
                                         {order.amount}
                                     </td>
                                     <td className="px-6 py-4 text-xs text-slate-400">
@@ -136,7 +136,7 @@ const AIChatOrdersPage: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button className="p-2 text-slate-500 hover:text-white transition-all hover:bg-slate-700/50 rounded-xl">
+                                            <button className="p-2 text-slate-400 hover:text-slate-900 transition-all hover:bg-slate-100/50 rounded-xl">
                                                 <MoreVertical className="w-5 h-5" />
                                             </button>
                                         </div>
@@ -148,21 +148,21 @@ const AIChatOrdersPage: React.FC = () => {
                 </div>
 
                 {/* Footer / Pagination */}
-                <div className="p-6 border-t border-slate-800/50 flex items-center justify-between bg-slate-950/20">
+                <div className="p-6 border-t border-slate-100 flex items-center justify-between bg-slate-50/30">
                     <p className="text-xs font-medium text-slate-500">
-                        Showing <span className="text-slate-300">5</span> of <span className="text-slate-300">1,284</span> orders
+                        Showing <span className="text-slate-900">5</span> of <span className="text-slate-900">1,284</span> orders
                     </p>
                     <div className="flex items-center gap-2">
-                        <button className="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-800 text-slate-500 hover:text-white transition-all active:scale-95">
+                        <button className="w-9 h-9 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-slate-900 transition-all active:scale-95 shadow-sm">
                             <ChevronLeft className="w-5 h-5" />
                         </button>
                         {[1, 2, 3].map((p) => (
-                            <button key={p} className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-bold transition-all ${p === 1 ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
+                            <button key={p} className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-bold transition-all shadow-sm ${p === 1 ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-white border border-slate-200 text-slate-500 hover:text-slate-900'
                                 }`}>
                                 {p}
                             </button>
                         ))}
-                        <button className="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-800 text-slate-500 hover:text-white transition-all active:scale-95">
+                        <button className="w-9 h-9 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-slate-900 transition-all active:scale-95 shadow-sm">
                             <ChevronRight className="w-5 h-5" />
                         </button>
                     </div>

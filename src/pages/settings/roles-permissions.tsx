@@ -94,8 +94,8 @@ const RolePermissionsPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="text-left">
-                    <h1 className="text-3xl font-bold text-white tracking-tight">Role Permissions</h1>
-                    <p className="text-slate-400 mt-1 font-medium italic">Define granular access levels for administrative staff.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Role Permissions</h1>
+                    <p className="text-slate-500 mt-1 font-medium italic">Define granular access levels for administrative staff.</p>
                 </div>
             </div>
 
@@ -105,9 +105,9 @@ const RolePermissionsPage: React.FC = () => {
                     <button
                         key={role.id}
                         onClick={() => setSelectedRole(role.id as any)}
-                        className={`p-6 bg-slate-900 border transition-all rounded-4xl text-left group relative overflow-hidden ${selectedRole === role.id
-                            ? `${role.border} bg-slate-900 shadow-2xl shadow-indigo-500/10`
-                            : 'border-slate-800 hover:border-slate-700 opacity-60'
+                        className={`p-6 bg-white border transition-all rounded-4xl text-left group relative overflow-hidden ${selectedRole === role.id
+                            ? `${role.border} bg-white shadow-xl shadow-indigo-500/5`
+                            : 'border-slate-200 hover:border-slate-300 opacity-60'
                             }`}
                     >
                         <div className="flex items-center justify-between mb-4 relative z-10">
@@ -117,7 +117,7 @@ const RolePermissionsPage: React.FC = () => {
                             {selectedRole === role.id && <div className="p-1 px-3 bg-indigo-500 text-white text-[10px] font-bold rounded-lg uppercase tracking-widest">Active Focus</div>}
                         </div>
                         <div className="relative z-10">
-                            <h4 className="text-lg font-bold text-white">{role.label}</h4>
+                            <h4 className="text-lg font-bold text-slate-900">{role.label}</h4>
                             <p className="text-xs text-slate-500 mt-1 font-medium">{rolePermissions[role.id].length} Permissions Enabled</p>
                         </div>
                         {selectedRole === role.id && <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-indigo-500/5 rounded-full blur-3xl" />}
@@ -126,25 +126,25 @@ const RolePermissionsPage: React.FC = () => {
             </div>
 
             {/* Permissions Engine */}
-            <div className="bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl backdrop-blur-sm">
-                <div className="p-8 border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
+                <div className="p-8 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="text-left flex items-center gap-4">
                         <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
                             <Lock className="w-6 h-6 text-indigo-500" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-white uppercase tracking-tight">{selectedRole} Policy</h3>
+                            <h3 className="text-xl font-bold text-slate-900 uppercase tracking-tight">{selectedRole} Policy</h3>
                             <p className="text-slate-500 text-xs font-medium">Toggle individual capabilities below</p>
                         </div>
                     </div>
                     <div className="relative w-full md:w-80 group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-indigo-500 transition-colors" />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
                         <input
                             type="text"
                             placeholder="Filter permissions..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-5 py-3 pl-11 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3 pl-11 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-['Inter'] placeholder-slate-400"
                         />
                     </div>
                 </div>
@@ -163,8 +163,8 @@ const RolePermissionsPage: React.FC = () => {
                                         key={perm.id}
                                         onClick={() => togglePermission(perm.id)}
                                         className={`p-5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group ${rolePermissions[selectedRole].includes(perm.id)
-                                            ? 'bg-slate-950 border-indigo-500/30'
-                                            : 'bg-slate-950/20 border-slate-800/50 grayscale opacity-60'
+                                            ? 'bg-slate-50 border-indigo-500/30'
+                                            : 'bg-white border-slate-100 grayscale opacity-60'
                                             } hover:border-indigo-500/50`}
                                     >
                                         <div className="flex items-start gap-4 text-left">
@@ -177,14 +177,14 @@ const RolePermissionsPage: React.FC = () => {
                                                 {cat === 'System' && <Shield className="w-4 h-4" />}
                                             </div>
                                             <div>
-                                                <p className={`text-sm font-bold transition-colors ${rolePermissions[selectedRole].includes(perm.id) ? 'text-white' : 'text-slate-500'
+                                                <p className={`text-sm font-bold transition-colors ${rolePermissions[selectedRole].includes(perm.id) ? 'text-slate-900' : 'text-slate-400'
                                                     }`}>{perm.label}</p>
-                                                <p className="text-[10px] font-medium text-slate-500 mt-1 leading-relaxed">{perm.description}</p>
+                                                <p className="text-[10px] font-medium text-slate-400 mt-1 leading-relaxed">{perm.description}</p>
                                             </div>
                                         </div>
-                                        <div className={`w-10 h-6 rounded-full p-1 transition-colors relative ${rolePermissions[selectedRole].includes(perm.id) ? 'bg-indigo-600' : 'bg-slate-800'
+                                        <div className={`w-10 h-6 rounded-full p-1 transition-colors relative ${rolePermissions[selectedRole].includes(perm.id) ? 'bg-indigo-600' : 'bg-slate-200'
                                             }`}>
-                                            <div className={`w-4 h-4 rounded-full bg-white shadow-lg transition-transform ${rolePermissions[selectedRole].includes(perm.id) ? 'translate-x-4' : 'translate-x-0'
+                                            <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${rolePermissions[selectedRole].includes(perm.id) ? 'translate-x-4' : 'translate-x-0'
                                                 }`} />
                                         </div>
                                     </div>
@@ -195,10 +195,10 @@ const RolePermissionsPage: React.FC = () => {
                 </div>
 
                 {/* Footer Insight */}
-                <div className="p-6 bg-indigo-600/5 border-t border-slate-800 flex items-center justify-center gap-4">
-                    <Info className="w-4 h-4 text-indigo-400" />
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest leading-relaxed">
-                        Changes to <span className="text-indigo-400">{selectedRole}</span> will apply globally to all assigned associates. <span className="text-slate-300 ml-2">Super Admin is immutable.</span>
+                <div className="p-6 bg-slate-50 border-t border-slate-200 flex items-center justify-center gap-4">
+                    <Info className="w-4 h-4 text-indigo-500" />
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+                        Changes to <span className="text-indigo-500">{selectedRole}</span> will apply globally to all assigned associates. <span className="text-slate-900 ml-2">Super Admin is immutable.</span>
                     </p>
                 </div>
             </div>

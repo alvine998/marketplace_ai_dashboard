@@ -157,7 +157,7 @@ const AdminManagementPage: React.FC = () => {
                                     <td className="px-8 py-6">
                                         <div className="flex items-center gap-4">
                                             <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-indigo-500 group-hover:scale-110 transition-transform overflow-hidden shadow-inner">
-                                                <img src={`https://ui-avatars.com/api/?name=${user.name}&background=f8fafc&color=6366f1`} alt="Avatar" />
+                                                <img src={`https://ui-avatars.com/api/?name=${user.name}&background=f1f5f9&color=6366f1`} alt="Avatar" />
                                             </div>
                                             <div className="text-left">
                                                 <p className="font-bold text-white text-sm leading-tight">{user.name}</p>
