@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ProtectedRoute, GuestRoute } from './components/guards/RouteGuards';
 import LoginPage from './pages/login';
 import ForgotPasswordPage from './pages/forgot-password';
 import MainLayout from './components/layout/MainLayout';
@@ -22,11 +23,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        {/* Guest Routes - redirect to dashboard if already logged in */}
+        <Route path="/" element={<GuestRoute><LoginPage /></GuestRoute>} />
+        <Route path="/forgot-password" element={<GuestRoute><ForgotPasswordPage /></GuestRoute>} />
 
-        {/* Main Application Layout */}
-        <Route path="/main" element={<MainLayout />}>
+        {/* Protected Routes - require authentication */}
+        <Route path="/main" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="products" element={<ProductPage />} />
@@ -50,3 +52,4 @@ function App() {
 }
 
 export default App;
+

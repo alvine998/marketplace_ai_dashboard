@@ -21,6 +21,7 @@ import {
     ShieldCheck,
     Layers
 } from 'lucide-react';
+import authService, { User } from '../../services/auth.service';
 
 const MainLayout: React.FC = () => {
     const navigate = useNavigate();
@@ -30,8 +31,15 @@ const MainLayout: React.FC = () => {
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const searchRef = useRef<HTMLDivElement>(null);
     const location = useLocation();
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        const currentUser = authService.getUser();
+        setUser(currentUser);
+    }, []);
 
     const handleLogout = () => {
+        authService.logout();
         navigate('/');
     };
 
@@ -299,11 +307,11 @@ const MainLayout: React.FC = () => {
                         <div className="h-8 w-px bg-slate-200 mx-2" />
                         <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
                             <div className="text-right hidden sm:block">
-                                <p className="text-sm font-semibold text-slate-900">Alvin Yoga</p>
+                                <p className="text-sm font-semibold text-slate-900">{user?.username || 'Guest'}</p>
                                 <p className="text-xs text-slate-500">Administrator</p>
                             </div>
                             <div className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden">
-                                <img src="https://ui-avatars.com/api/?name=Alvin+Yoga&background=0ea5e9&color=fff" alt="Avatar" />
+                                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.username || 'Guest')}&background=0ea5e9&color=fff`} alt="Avatar" />
                             </div>
                             <button
                                 onClick={handleLogout}

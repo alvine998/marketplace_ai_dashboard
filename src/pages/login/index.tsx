@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import authService from '../../services/auth.service';
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Login attempt:', { email, password });
-        // Simulating login redirect
-        navigate('/main/dashboard');
+        setIsLoading(true);
+
+        try {
+            const response = await authService.login({ email, password });
+            toast.success(response.message || 'Login successful!');
+            navigate('/main/dashboard');
+        } catch (err: any) {
+            const errorMessage = err.response?.data?.message || 'Login failed. Please try again.';
+            toast.error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -48,6 +60,7 @@ const LoginPage: React.FC = () => {
                                     className="block w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                                     placeholder="name@example.com"
                                     required
+                                    disabled={isLoading}
                                 />
                             </div>
                         </div>
@@ -56,7 +69,6 @@ const LoginPage: React.FC = () => {
                         <div className="space-y-2">
                             <div className="flex items-center justify-between ml-1 text-sm font-medium">
                                 <label className="text-slate-700">Password</label>
-                                <Link to="/forgot-password" title="Forgot Password" className="text-blue-600 hover:text-blue-500 transition-colors">Forgot?</Link>
                             </div>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-blue-500 text-slate-500">
@@ -69,6 +81,7 @@ const LoginPage: React.FC = () => {
                                     className="block w-full pl-11 pr-11 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                                     placeholder="••••••••"
                                     required
+                                    disabled={isLoading}
                                 />
                                 <button
                                     type="button"
@@ -78,15 +91,28 @@ const LoginPage: React.FC = () => {
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
+                            <div className='text-right'>
+                                <Link to="/forgot-password" title="Forgot Password" className="text-blue-600 hover:text-blue-500 transition-colors text-right">Forgot Password?</Link>
+                            </div>
                         </div>
 
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full flex items-center justify-center gap-2 py-3.5 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 active:scale-[0.98] transition-all group"
+                            disabled={isLoading}
+                            className="w-full flex items-center justify-center gap-2 py-3.5 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 active:scale-[0.98] transition-all group disabled:opacity-70 disabled:cursor-not-allowed"
                         >
-                            Log In
-                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            {isLoading ? (
+                                <>
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                    Logging in...
+                                </>
+                            ) : (
+                                <>
+                                    Log In
+                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </>
+                            )}
                         </button>
                     </form>
                 </div>
