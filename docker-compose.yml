@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5177:5177"
+    container_name: marketplace-dashboard
+    restart: unless-stopped
