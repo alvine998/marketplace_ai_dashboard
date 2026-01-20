@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:4001",
+  baseURL:
+    (window as any).CONFIG?.VITE_API_BASE_URL ||
+    import.meta.env.VITE_API_BASE_URL ||
+    "http://localhost:4001",
   headers: {
     "Content-Type": "application/json",
   },
@@ -18,7 +21,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor for error handling
@@ -31,7 +34,7 @@ api.interceptors.response.use(
       window.location.href = "/login";
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

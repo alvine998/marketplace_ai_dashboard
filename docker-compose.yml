@@ -5,3 +5,5 @@ services:
       - "5177:5177"
     container_name: marketplace-dashboard
     restart: unless-stopped
+    environment:
+      - VITE_API_BASE_URL=${VITE_API_BASE_URL}
