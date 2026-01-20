@@ -39,8 +39,8 @@ const LoginPage: React.FC = () => {
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-tr from-blue-600 to-indigo-600 mb-6 shadow-xl shadow-blue-500/20">
                         <Lock className="w-8 h-8 text-white" />
                     </div>
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Welcome Back</h1>
-                    <p className="text-slate-500">Please enter your details to access your account</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Pretty Shop</h1>
+                    <p className="text-slate-500">Please enter your details to access dashboard</p>
                 </div>
 
                 {/* Login Card */}

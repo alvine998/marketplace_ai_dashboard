@@ -17,6 +17,8 @@ import SellerDetailPage from './pages/sellers/detail';
 import AdminManagementPage from './pages/settings/admin-management';
 import CategoriesPage from './pages/settings/categories';
 import RolePermissionsPage from './pages/settings/roles-permissions';
+import ActivityLogsPage from './pages/settings/activity-logs';
+import LoginAttemptsPage from './pages/settings/login-attempts';
 import './App.css';
 
 function App() {
@@ -44,6 +46,8 @@ function App() {
           <Route path="settings/admin" element={<AdminManagementPage />} />
           <Route path="settings/categories" element={<CategoriesPage />} />
           <Route path="settings/roles" element={<RolePermissionsPage />} />
+          <Route path="settings/activity-logs" element={<ActivityLogsPage />} />
+          <Route path="settings/login-attempts" element={<LoginAttemptsPage />} />
           {/* Add more main routes here */}
         </Route>
       </Routes>

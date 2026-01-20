@@ -9,8 +9,11 @@ export interface User {
   id: string;
   username: string;
   email: string;
+  name: string;
   phone: string;
+  gender: string;
   address: string;
+  role?: string;
 }
 
 export interface LoginResponse {
@@ -22,6 +25,14 @@ export interface LoginResponse {
 export const authService = {
   async login(payload: LoginPayload): Promise<LoginResponse> {
     const response = await api.post<LoginResponse>("/auth/login", payload);
+
+    // Check if user has admin role
+    const userRole = response.data.user?.role;
+    if (userRole !== "admin") {
+      throw new Error(
+        "Access denied. Only admin users can access this dashboard.",
+      );
+    }
 
     // Store token and user in sessionStorage
     if (response.data.token) {
@@ -76,6 +87,15 @@ export const authService = {
     }
 
     return true;
+  },
+
+  getUserRole(): string | null {
+    const user = this.getUser();
+    return user?.role || null;
+  },
+
+  isAdmin(): boolean {
+    return this.getUserRole() === "admin";
   },
 };
 

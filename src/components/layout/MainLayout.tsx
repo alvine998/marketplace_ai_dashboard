@@ -19,7 +19,9 @@ import {
     Store,
     Shield,
     ShieldCheck,
-    Layers
+    Layers,
+    History,
+    Activity
 } from 'lucide-react';
 import authService, { User } from '../../services/auth.service';
 
@@ -82,6 +84,8 @@ const MainLayout: React.FC = () => {
             subItems: [
                 { icon: Shield, label: 'Admin Management', path: '/main/settings/admin' },
                 { icon: ShieldCheck, label: 'Roles & Permissions', path: '/main/settings/roles' },
+                { icon: Activity, label: 'Activity Logs', path: '/main/settings/activity-logs' },
+                { icon: History, label: 'Login Attempts', path: '/main/settings/login-attempts' },
                 { icon: Smartphone, label: 'Push Notification', path: '/main/push-notifications' },
                 { icon: Layers, label: 'Product Category', path: '/main/settings/categories' },
             ]
