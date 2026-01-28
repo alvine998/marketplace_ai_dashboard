@@ -19,6 +19,11 @@ import CategoriesPage from './pages/settings/categories';
 import RolePermissionsPage from './pages/settings/roles-permissions';
 import ActivityLogsPage from './pages/settings/activity-logs';
 import LoginAttemptsPage from './pages/settings/login-attempts';
+import VouchersPage from './pages/vouchers';
+import FeedPage from './pages/feed';
+import SubCategoriesPage from './pages/subcategories';
+import AboutUsPage from './pages/about-us';
+import FAQPage from './pages/faq';
 import './App.css';
 
 function App() {
@@ -48,6 +53,11 @@ function App() {
           <Route path="settings/roles" element={<RolePermissionsPage />} />
           <Route path="settings/activity-logs" element={<ActivityLogsPage />} />
           <Route path="settings/login-attempts" element={<LoginAttemptsPage />} />
+          <Route path="vouchers" element={<VouchersPage />} />
+          <Route path="feed" element={<FeedPage />} />
+          <Route path="subcategories" element={<SubCategoriesPage />} />
+          <Route path="about-us" element={<AboutUsPage />} />
+          <Route path="faq" element={<FAQPage />} />
           {/* Add more main routes here */}
         </Route>
       </Routes>

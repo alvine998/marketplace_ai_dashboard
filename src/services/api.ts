@@ -27,7 +27,25 @@ api.interceptors.request.use(
 // Response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Retry logic for 429 errors
+    if (error.response?.status === 429 && originalRequest) {
+      originalRequest._retryCount = (originalRequest._retryCount || 0) + 1;
+
+      if (originalRequest._retryCount <= 3) {
+        const retryAfter = error.response.headers["retry-after"];
+        // Exponential backoff: 1s, 2s, 4s... or use retry-after header
+        const delay = retryAfter
+          ? parseInt(retryAfter, 10) * 1000
+          : 1000 * Math.pow(2, originalRequest._retryCount - 1);
+
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        return api(originalRequest);
+      }
+    }
+
     if (error.response?.status === 401) {
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("user");

@@ -19,7 +19,7 @@ export interface Seller {
 
 export interface SellersResponse {
   totalItems: number;
-  data: Seller[];
+  items: Seller[];
   totalPages: number;
   currentPage: number;
 }
@@ -53,6 +53,16 @@ export const sellerService = {
 
   async getSellerById(id: string): Promise<Seller> {
     const response = await api.get<Seller>(`/sellers/${id}`);
+    return response.data;
+  },
+
+  async updateSeller(id: string, data: Partial<Seller>): Promise<Seller> {
+    const response = await api.patch<Seller>(`/sellers/${id}`, data);
+    return response.data;
+  },
+
+  async verifySeller(id: string): Promise<Seller> {
+    const response = await api.patch<Seller>(`/sellers/${id}/verify`);
     return response.data;
   },
 };

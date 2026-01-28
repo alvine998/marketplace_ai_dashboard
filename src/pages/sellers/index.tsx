@@ -18,7 +18,8 @@ import {
     ChevronsLeft,
     ChevronsRight,
     ShieldCheck,
-    Users
+    Users,
+    CheckCircle
 } from 'lucide-react';
 import sellerService, { Seller } from '../../services/seller.service';
 import toast from 'react-hot-toast';
@@ -37,7 +38,7 @@ const SellerPage: React.FC = () => {
     const itemsPerPage = 10;
 
     // Filter state
-    const [activeTab, setActiveTab] = useState<'all' | 'verified' | 'official'>('all');
+    const [activeTab, setActiveTab] = useState<'all' | 'verified' | 'official' | 'unverified'>('all');
     const [searchTerm, setSearchTerm] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
 
@@ -67,15 +68,17 @@ const SellerPage: React.FC = () => {
                 params.isVerified = true;
             } else if (activeTab === 'official') {
                 params.isOfficial = true;
+            } else if (activeTab === 'unverified') {
+                params.isVerified = false;
             }
 
             const response = await sellerService.getSellers(params);
 
-            setSellers(response.data || []);
+            setSellers(response.items || []);
             setTotalPages(response.totalPages || 1);
             setTotalItems(response.totalItems || 0);
         } catch (err: any) {
-            const errorMessage = err.response?.data?.message || 'Failed to fetch sellers';
+            const errorMessage = err.response?.data?.message || 'Gagal mengambil data penjual';
             setError(errorMessage);
             toast.error(errorMessage);
         } finally {
@@ -88,7 +91,7 @@ const SellerPage: React.FC = () => {
     }, [fetchSellers]);
 
     // Handle tab change
-    const handleTabChange = (tab: 'all' | 'verified' | 'official') => {
+    const handleTabChange = (tab: 'all' | 'verified' | 'official' | 'unverified') => {
         setActiveTab(tab);
         setCurrentPage(1);
     };
@@ -98,6 +101,25 @@ const SellerPage: React.FC = () => {
     const goToLastPage = () => setCurrentPage(totalPages);
     const goToPreviousPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
     const goToNextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
+
+    // Action handlers
+    const handleUpdateStatus = async (sellerId: string, isVerified: boolean) => {
+        try {
+            const action = isVerified ? 'verifikasi' : 'suspend';
+            if (!window.confirm(`Apakah Anda yakin ingin men-${action} penjual ini?`)) return;
+
+            setLoading(true);
+            await sellerService.verifySeller(sellerId);
+
+            toast.success(`Berhasil men-${action} penjual`);
+            fetchSellers();
+        } catch (err: any) {
+            const errorMessage = err.response?.data?.message || 'Gagal memperbarui status penjual';
+            toast.error(errorMessage);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // Generate page numbers
     const getPageNumbers = () => {
@@ -130,28 +152,29 @@ const SellerPage: React.FC = () => {
         if (seller.isOfficial) {
             return (
                 <span className="flex items-center gap-1.5 px-3 py-1 bg-indigo-500/10 text-indigo-500 text-xs font-bold uppercase tracking-widest rounded-lg border border-indigo-500/20">
-                    <Award className="w-3 h-3" /> Official
+                    <Award className="w-3 h-3" /> Resmi
                 </span>
             );
         }
         if (seller.isVerified) {
             return (
                 <span className="flex items-center gap-1.5 px-3 py-1 bg-green-500/10 text-green-500 text-xs font-bold uppercase tracking-widest rounded-lg border border-green-500/20">
-                    <ShieldCheck className="w-3 h-3" /> Verified
+                    <ShieldCheck className="w-3 h-3" /> Terverifikasi
                 </span>
             );
         }
         return (
             <span className="flex items-center gap-1.5 px-3 py-1 bg-slate-500/10 text-slate-500 text-xs font-bold uppercase tracking-widest rounded-lg border border-slate-500/20">
-                <UserCheck className="w-3 h-3" /> Regular
+                <UserCheck className="w-3 h-3" /> Reguler
             </span>
         );
     };
 
     const tabs = [
-        { id: 'all', label: 'All Sellers', icon: Users },
-        { id: 'verified', label: 'Verified', icon: ShieldCheck },
-        { id: 'official', label: 'Official', icon: Award },
+        { id: 'all', label: 'Semua Penjual', icon: Users },
+        { id: 'verified', label: 'Terverifikasi', icon: ShieldCheck },
+        { id: 'unverified', label: 'Belum Verifikasi', icon: UserCheck },
+        { id: 'official', label: 'Resmi', icon: Award },
     ];
 
     return (
@@ -159,8 +182,8 @@ const SellerPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="text-left">
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Seller Management</h1>
-                    <p className="text-slate-500 mt-1">Review and manage all registered shop owners on your platform.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Manajemen Penjual</h1>
+                    <p className="text-slate-500 mt-1">Tinjau dan kelola semua pemilik toko yang terdaftar di platform Anda.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     {/* <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/10 active:scale-95">
@@ -174,7 +197,7 @@ const SellerPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-white border border-slate-200 p-5 rounded-2xl flex items-center justify-between">
                     <div>
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Sellers</p>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Penjual</p>
                         <p className="text-2xl font-bold text-slate-900 mt-1">{totalItems}</p>
                     </div>
                     <div className="p-3 rounded-xl bg-blue-500/10 text-blue-500">
@@ -183,7 +206,7 @@ const SellerPage: React.FC = () => {
                 </div>
                 <div className="bg-white border border-slate-200 p-5 rounded-2xl flex items-center justify-between">
                     <div>
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Verified Sellers</p>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Penjual Terverifikasi</p>
                         <p className="text-2xl font-bold text-slate-900 mt-1">{(sellers || []).filter(s => s.isVerified).length}</p>
                     </div>
                     <div className="p-3 rounded-xl bg-green-500/10 text-green-500">
@@ -192,7 +215,7 @@ const SellerPage: React.FC = () => {
                 </div>
                 <div className="bg-white border border-slate-200 p-5 rounded-2xl flex items-center justify-between">
                     <div>
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Official Partners</p>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Mitra Resmi</p>
                         <p className="text-2xl font-bold text-slate-900 mt-1">{(sellers || []).filter(s => s.isOfficial).length}</p>
                     </div>
                     <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-500">
@@ -231,13 +254,13 @@ const SellerPage: React.FC = () => {
                     <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
                         <AlertCircle className="w-8 h-8 text-red-500" />
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Failed to load sellers</h3>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Gagal memuat penjual</h3>
                     <p className="text-slate-500 mb-4">{error}</p>
                     <button
                         onClick={() => fetchSellers()}
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-all"
                     >
-                        Try Again
+                        Coba Lagi
                     </button>
                 </div>
             )}
@@ -250,7 +273,7 @@ const SellerPage: React.FC = () => {
                             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                             <input
                                 type="text"
-                                placeholder="Search by store name..."
+                                placeholder="Cari berdasarkan nama toko..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pl-10 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
@@ -261,7 +284,7 @@ const SellerPage: React.FC = () => {
                             className="flex items-center gap-2 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-100 transition-all"
                         >
                             <RefreshCw className="w-4 h-4" />
-                            Refresh
+                            Perbarui
                         </button>
                     </div>
 
@@ -269,11 +292,11 @@ const SellerPage: React.FC = () => {
                         <table className="w-full">
                             <thead>
                                 <tr className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-widest border-b border-slate-200">
-                                    <th className="px-8 py-5">Store</th>
-                                    <th className="px-8 py-5">Owner</th>
-                                    <th className="px-8 py-5">Address</th>
+                                    <th className="px-8 py-5">Toko</th>
+                                    <th className="px-8 py-5">Pemilik</th>
+                                    <th className="px-8 py-5">Alamat</th>
                                     <th className="px-8 py-5">Status</th>
-                                    <th className="px-8 py-5 text-right">Actions</th>
+                                    <th className="px-8 py-5 text-right">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100 text-left">
@@ -283,8 +306,8 @@ const SellerPage: React.FC = () => {
                                             <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
                                                 <Store className="w-8 h-8 text-slate-400" />
                                             </div>
-                                            <h3 className="text-lg font-semibold text-slate-900 mb-2">No sellers found</h3>
-                                            <p className="text-slate-500">Try adjusting your search or filter criteria.</p>
+                                            <h3 className="text-lg font-semibold text-slate-900 mb-2">Penjual tidak ditemukan</h3>
+                                            <p className="text-slate-500">Coba sesuaikan kriteria pencarian atau filter Anda.</p>
                                         </td>
                                     </tr>
                                 ) : (
@@ -307,7 +330,7 @@ const SellerPage: React.FC = () => {
                                             </td>
                                             <td className="px-8 py-6">
                                                 <div className="space-y-1.5 text-left">
-                                                    <p className="font-semibold text-slate-900">{seller.user?.username || 'Unknown'}</p>
+                                                    <p className="font-semibold text-slate-900">{seller.user?.username || 'Tidak Diketahui'}</p>
                                                     <div className="flex items-center gap-2 text-slate-500 text-sm">
                                                         <Mail className="w-3.5 h-3.5" />
                                                         {seller.user?.email || '-'}
@@ -325,13 +348,20 @@ const SellerPage: React.FC = () => {
                                                     <button
                                                         onClick={() => navigate(`/main/sellers/${seller.id}`)}
                                                         className="p-2 bg-slate-50 hover:bg-blue-50 text-slate-500 hover:text-blue-600 rounded-lg transition-all border border-slate-200"
-                                                        title="View Details"
+                                                        title="Lihat Detail"
                                                     >
                                                         <ExternalLink className="w-4 h-4" />
                                                     </button>
-                                                    <button className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-lg transition-all border border-slate-200">
-                                                        <MoreHorizontal className="w-4 h-4" />
-                                                    </button>
+
+                                                    {!seller.isVerified ? (
+                                                        <button
+                                                            onClick={() => handleUpdateStatus(seller.id, true)}
+                                                            className="p-2 bg-green-50 hover:bg-green-100 text-green-600 hover:text-green-700 rounded-lg transition-all border border-green-200"
+                                                            title="Verifikasi Penjual"
+                                                        >
+                                                            <CheckCircle className="w-4 h-4" />
+                                                        </button>
+                                                    ) : ""}
                                                 </div>
                                             </td>
                                         </tr>
@@ -345,9 +375,9 @@ const SellerPage: React.FC = () => {
                     {sellers.length > 0 && (
                         <div className="p-6 border-t border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <p className="text-xs font-medium text-slate-500">
-                                Showing <span className="font-bold text-slate-700">{((currentPage - 1) * itemsPerPage) + 1}</span> to{' '}
-                                <span className="font-bold text-slate-700">{Math.min(currentPage * itemsPerPage, totalItems)}</span> of{' '}
-                                <span className="font-bold text-slate-700">{totalItems}</span> sellers
+                                Menampilkan <span className="font-bold text-slate-700">{((currentPage - 1) * itemsPerPage) + 1}</span> sampai{' '}
+                                <span className="font-bold text-slate-700">{Math.min(currentPage * itemsPerPage, totalItems)}</span> dari{' '}
+                                <span className="font-bold text-slate-700">{totalItems}</span> penjual
                             </p>
 
                             {totalPages > 1 && (

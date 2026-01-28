@@ -11,6 +11,7 @@ import {
     Loader2,
     AlertCircle,
     Upload,
+    Shield,
     Image as ImageIcon
 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -22,6 +23,7 @@ interface FormData {
     icon: File | null;
     iconPreview: string | null;
     parentId: string | null;
+    isHighlight: boolean;
 }
 
 const CategoryPage: React.FC = () => {
@@ -43,6 +45,7 @@ const CategoryPage: React.FC = () => {
         icon: null,
         iconPreview: null,
         parentId: null,
+        isHighlight: false,
     });
 
     // Delete confirmation
@@ -53,10 +56,10 @@ const CategoryPage: React.FC = () => {
     const fetchCategories = async () => {
         try {
             setLoading(true);
-            const response = await categoryService.getAll({ limit: 100 });
+            const response = await categoryService.getAll({ page: 1, limit: 100 });
             setCategories(response.data || []);
         } catch (error: any) {
-            toast.error(error.response?.data?.message || 'Failed to fetch categories');
+            toast.error(error.response?.data?.message || 'Gagal mengambil kategori');
         } finally {
             setLoading(false);
         }
@@ -85,12 +88,12 @@ const CategoryPage: React.FC = () => {
         if (file) {
             // Validate file type
             if (!file.type.startsWith('image/')) {
-                toast.error('Please select an image file');
+                toast.error('Silakan pilih file gambar');
                 return;
             }
             // Validate file size (max 5MB)
             if (file.size > 5 * 1024 * 1024) {
-                toast.error('Image size should be less than 5MB');
+                toast.error('Ukuran gambar harus kurang dari 5MB');
                 return;
             }
 
@@ -128,6 +131,7 @@ const CategoryPage: React.FC = () => {
             icon: null,
             iconPreview: null,
             parentId: parentId || null,
+            isHighlight: false,
         });
         setShowModal(true);
     };
@@ -141,6 +145,7 @@ const CategoryPage: React.FC = () => {
             icon: null,
             iconPreview: category.imageUrl || null,
             parentId: category.parentId || null,
+            isHighlight: category.isHighlight || false,
         });
         setShowModal(true);
     };
@@ -157,7 +162,7 @@ const CategoryPage: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.name.trim()) {
-            toast.error('Category name is required');
+            toast.error('Nama kategori wajib diisi');
             return;
         }
 
@@ -178,14 +183,15 @@ const CategoryPage: React.FC = () => {
                 name: formData.name,
                 imageUrl: iconUrl,
                 parentId: formData.parentId,
+                isHighlight: formData.isHighlight,
             };
 
             if (modalMode === 'create') {
                 await categoryService.create(payload);
-                toast.success('Category created successfully');
+                toast.success('Kategori berhasil dibuat');
             } else if (editingCategory) {
                 await categoryService.update(editingCategory.id, payload);
-                toast.success('Category updated successfully');
+                toast.success('Kategori berhasil diperbarui');
             }
             closeModal();
             fetchCategories();
@@ -201,13 +207,25 @@ const CategoryPage: React.FC = () => {
         setDeleteLoading(true);
         try {
             await categoryService.delete(id);
-            toast.success('Category deleted successfully');
+            toast.success('Kategori berhasil dihapus');
             setDeleteConfirm(null);
             fetchCategories();
         } catch (error: any) {
-            toast.error(error.response?.data?.message || 'Failed to delete category');
+            toast.error(error.response?.data?.message || 'Gagal menghapus kategori');
         } finally {
             setDeleteLoading(false);
+        }
+    };
+
+    // Toggle highlight
+    const handleToggleHighlight = async (category: Category) => {
+        try {
+            const newHighlightState = !category.isHighlight;
+            await categoryService.update(category.id, { isHighlight: newHighlightState });
+            setCategories(prev => prev.map(c => c.id === category.id ? { ...c, isHighlight: newHighlightState } : c));
+            toast.success(`Kategori ${newHighlightState ? 'disorot' : 'batal disorot'} berhasil`);
+        } catch (error: any) {
+            toast.error(error.response?.data?.message || 'Gagal memperbarui status sorotan kategori');
         }
     };
 
@@ -221,15 +239,15 @@ const CategoryPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="text-left">
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Product Categories</h1>
-                    <p className="text-slate-500 mt-1">Organize your marketplace hierarchy and category icons.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Kategori Produk</h1>
+                    <p className="text-slate-500 mt-1">Atur hierarki marketplace dan ikon kategori Anda.</p>
                 </div>
                 <button
                     onClick={() => openCreateModal()}
                     className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/10 active:scale-95 text-sm"
                 >
                     <Plus className="w-4 h-4" />
-                    New Category
+                    Kategori Baru
                 </button>
             </div>
 
@@ -241,7 +259,7 @@ const CategoryPage: React.FC = () => {
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search categories..."
+                        placeholder="Cari kategori..."
                         className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
                     />
                 </div>
@@ -257,14 +275,14 @@ const CategoryPage: React.FC = () => {
                     <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4">
                         <Layers className="w-8 h-8 text-slate-400" />
                     </div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">No categories yet</h3>
-                    <p className="text-slate-500 mb-6">Create your first category to organize products</p>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Belum ada kategori</h3>
+                    <p className="text-slate-500 mb-6">Buat kategori pertama Anda untuk mengatur produk</p>
                     <button
                         onClick={() => openCreateModal()}
                         className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-all"
                     >
                         <Plus className="w-4 h-4" />
-                        Create Category
+                        Buat Kategori
                     </button>
                 </div>
             ) : (
@@ -273,7 +291,7 @@ const CategoryPage: React.FC = () => {
                     <div className="lg:col-span-2 bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                         <div className="p-6 border-b border-slate-200 flex items-center justify-between">
                             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                                <Layers className="w-5 h-5 text-blue-600" /> Catalog Tree
+                                <Layers className="w-5 h-5 text-blue-600" /> Pohon Katalog
                             </h2>
                             <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">
                                 Total: {categories.length}
@@ -283,7 +301,7 @@ const CategoryPage: React.FC = () => {
                         <div className="p-4 space-y-2">
                             {filteredParentCategories.length === 0 ? (
                                 <div className="text-center py-8 text-slate-500">
-                                    No categories match your search
+                                    Tidak ada kategori yang cocok dengan pencarian Anda
                                 </div>
                             ) : (
                                 filteredParentCategories.map((cat) => {
@@ -316,29 +334,36 @@ const CategoryPage: React.FC = () => {
                                                     <div className="text-left">
                                                         <p className="font-bold text-slate-900 text-base leading-tight">{cat.name}</p>
                                                         <p className="text-xs text-slate-500 font-medium mt-0.5">
-                                                            {subs.length} Subcategories
+                                                            {subs.length} Subkategori
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <button
+                                                        onClick={() => handleToggleHighlight(cat)}
+                                                        className={`p-2 rounded-lg transition-all ${cat.isHighlight ? 'bg-amber-100 text-amber-600' : 'hover:bg-slate-100 text-slate-400'}`}
+                                                        title={cat.isHighlight ? "Hapus dari sorotan" : "Tambah ke sorotan"}
+                                                    >
+                                                        <Shield className={`w-4 h-4 ${cat.isHighlight ? 'fill-amber-600' : ''}`} />
+                                                    </button>
+                                                    <button
                                                         onClick={() => openCreateModal(cat.id)}
                                                         className="p-2 hover:bg-slate-100 text-slate-400 hover:text-slate-900 rounded-lg transition-all"
-                                                        title="Add subcategory"
+                                                        title="Tambah subkategori"
                                                     >
                                                         <Plus className="w-4 h-4" />
                                                     </button>
                                                     <button
                                                         onClick={() => openEditModal(cat)}
                                                         className="p-2 hover:bg-slate-100 text-slate-400 hover:text-slate-900 rounded-lg transition-all"
-                                                        title="Edit category"
+                                                        title="Ubah kategori"
                                                     >
                                                         <Edit className="w-4 h-4" />
                                                     </button>
                                                     <button
                                                         onClick={() => setDeleteConfirm(cat.id)}
                                                         className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg transition-all"
-                                                        title="Delete category"
+                                                        title="Hapus kategori"
                                                     >
                                                         <Trash2 className="w-4 h-4" />
                                                     </button>
@@ -360,10 +385,16 @@ const CategoryPage: React.FC = () => {
                                                                 </div>
                                                                 <div className="text-xs text-left">
                                                                     <p className="font-bold text-slate-700">{sub.name}</p>
-                                                                    <p className="text-slate-400 font-medium">Subcategory</p>
+                                                                    <p className="text-slate-400 font-medium">Subkategori</p>
                                                                 </div>
                                                             </div>
                                                             <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                <button
+                                                                    onClick={() => handleToggleHighlight(sub)}
+                                                                    className={`p-1.5 rounded-lg transition-all ${sub.isHighlight ? 'bg-amber-100 text-amber-600' : 'hover:bg-slate-100 text-slate-400'}`}
+                                                                >
+                                                                    <Shield className={`w-3.5 h-3.5 ${sub.isHighlight ? 'fill-amber-600' : ''}`} />
+                                                                </button>
                                                                 <button
                                                                     onClick={() => openEditModal(sub)}
                                                                     className="p-1.5 hover:bg-slate-100 text-slate-400 hover:text-slate-900 rounded-lg transition-all"
@@ -397,15 +428,15 @@ const CategoryPage: React.FC = () => {
 
                         <div className="space-y-4">
                             <div className="p-4 bg-slate-50 rounded-xl">
-                                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Total Categories</p>
+                                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Total Kategori</p>
                                 <p className="text-2xl font-bold text-slate-900 mt-1">{categories.length}</p>
                             </div>
                             <div className="p-4 bg-slate-50 rounded-xl">
-                                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Parent Categories</p>
+                                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Kategori Utama</p>
                                 <p className="text-2xl font-bold text-slate-900 mt-1">{getParentCategories().length}</p>
                             </div>
                             <div className="p-4 bg-slate-50 rounded-xl">
-                                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Subcategories</p>
+                                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Subkategori</p>
                                 <p className="text-2xl font-bold text-slate-900 mt-1">{categories.length - getParentCategories().length}</p>
                             </div>
                         </div>
@@ -414,7 +445,7 @@ const CategoryPage: React.FC = () => {
                             onClick={() => openCreateModal()}
                             className="w-full py-4 bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-600 font-bold rounded-2xl transition-all shadow-sm active:scale-95 text-sm mt-6"
                         >
-                            Add New Category
+                            Tambah Kategori Baru
                         </button>
                     </div>
                 </div>
@@ -426,7 +457,7 @@ const CategoryPage: React.FC = () => {
                     <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl animate-in zoom-in-95 duration-200">
                         <div className="p-6 border-b border-slate-200 flex items-center justify-between">
                             <h3 className="text-lg font-bold text-slate-900">
-                                {modalMode === 'create' ? 'Create Category' : 'Edit Category'}
+                                {modalMode === 'create' ? 'Buat Kategori' : 'Ubah Kategori'}
                             </h3>
                             <button
                                 onClick={closeModal}
@@ -438,25 +469,25 @@ const CategoryPage: React.FC = () => {
 
                         <form onSubmit={handleSubmit} className="p-6 space-y-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Category Name</label>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Nama Kategori</label>
                                 <input
                                     type="text"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder-slate-400"
-                                    placeholder="e.g. Electronics, Fashion"
+                                    placeholder="mis. Elektronik, Fashion"
                                     required
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Parent Category</label>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Kategori Induk</label>
                                 <select
                                     value={formData.parentId || ''}
                                     onChange={(e) => setFormData({ ...formData, parentId: e.target.value || null })}
                                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none cursor-pointer"
                                 >
-                                    <option value="">Create as Root Category</option>
+                                    <option value="">Buat sebagai Kategori Akar</option>
                                     {getParentCategories()
                                         .filter(c => c.id !== editingCategory?.id)
                                         .map(c => (
@@ -465,9 +496,23 @@ const CategoryPage: React.FC = () => {
                                 </select>
                             </div>
 
+                            <div className="flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                                <div className="text-left">
+                                    <p className="text-sm font-bold text-slate-900">Soroti Kategori</p>
+                                    <p className="text-[10px] font-medium text-slate-500">Tampilkan kategori ini di bagian unggulan</p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, isHighlight: !formData.isHighlight })}
+                                    className={`w-12 h-7 rounded-full p-1 transition-all duration-300 relative ${formData.isHighlight ? 'bg-amber-500' : 'bg-slate-200'}`}
+                                >
+                                    <div className={`w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-300 ${formData.isHighlight ? 'translate-x-5' : 'translate-x-0'}`} />
+                                </button>
+                            </div>
+
                             {/* Image Upload */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Category Icon</label>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ikon Kategori</label>
 
                                 {formData.iconPreview ? (
                                     <div className="relative">
@@ -486,7 +531,7 @@ const CategoryPage: React.FC = () => {
                                             <X className="w-4 h-4" />
                                         </button>
                                         <p className="text-xs text-slate-500 mt-2 text-center">
-                                            {formData.icon ? formData.icon.name : 'Current icon'}
+                                            {formData.icon ? formData.icon.name : 'Ikon saat ini'}
                                         </p>
                                     </div>
                                 ) : (
@@ -498,8 +543,8 @@ const CategoryPage: React.FC = () => {
                                             <Upload className="w-6 h-6 text-slate-400" />
                                         </div>
                                         <div className="text-center">
-                                            <p className="text-sm font-medium text-slate-600">Click to upload icon</p>
-                                            <p className="text-xs text-slate-400 mt-1">PNG, JPG, SVG up to 5MB</p>
+                                            <p className="text-sm font-medium text-slate-600">Klik untuk mengunggah ikon</p>
+                                            <p className="text-xs text-slate-400 mt-1">PNG, JPG, SVG hingga 5MB</p>
                                         </div>
                                     </div>
                                 )}
@@ -519,7 +564,7 @@ const CategoryPage: React.FC = () => {
                                     onClick={closeModal}
                                     className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-all"
                                 >
-                                    Cancel
+                                    Batal
                                 </button>
                                 <button
                                     type="submit"
@@ -527,7 +572,7 @@ const CategoryPage: React.FC = () => {
                                     className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                 >
                                     {formLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-                                    {modalMode === 'create' ? 'Create' : 'Update'}
+                                    {modalMode === 'create' ? 'Buat' : 'Perbarui'}
                                 </button>
                             </div>
                         </form>
@@ -542,16 +587,16 @@ const CategoryPage: React.FC = () => {
                         <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center mx-auto mb-4">
                             <AlertCircle className="w-7 h-7 text-red-600" />
                         </div>
-                        <h3 className="text-lg font-bold text-slate-900 mb-2">Delete Category?</h3>
+                        <h3 className="text-lg font-bold text-slate-900 mb-2">Hapus Kategori?</h3>
                         <p className="text-slate-500 text-sm mb-6">
-                            This action cannot be undone. All subcategories will also be affected.
+                            Tindakan ini tidak dapat dibatalkan. Semua subkategori juga akan terpengaruh.
                         </p>
                         <div className="flex gap-3">
                             <button
                                 onClick={() => setDeleteConfirm(null)}
                                 className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-all"
                             >
-                                Cancel
+                                Batal
                             </button>
                             <button
                                 onClick={() => handleDelete(deleteConfirm)}
@@ -559,7 +604,7 @@ const CategoryPage: React.FC = () => {
                                 className="flex-1 py-3 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl transition-all disabled:opacity-70 flex items-center justify-center gap-2"
                             >
                                 {deleteLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-                                Delete
+                                Hapus
                             </button>
                         </div>
                     </div>

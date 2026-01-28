@@ -36,7 +36,7 @@ const ProductPage: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
 
-    const categories = ['Electronics', 'Wearables', 'Accessories', 'Computers', 'Furniture', 'Fashion', 'Home', 'Sports'];
+    const categories = ['Elektronik', 'Wearables', 'Aksesoris', 'Komputer', 'Furnitur', 'Fashion', 'Rumah Tangga', 'Olahraga'];
 
     // Debounce search input
     useEffect(() => {
@@ -64,7 +64,7 @@ const ProductPage: React.FC = () => {
             setTotalPages(response.totalPages || 1);
             setTotalItems(response.totalItems || 0);
         } catch (err: any) {
-            const errorMessage = err.response?.data?.message || 'Failed to fetch products';
+            const errorMessage = err.response?.data?.message || 'Gagal mengambil data produk';
             setError(errorMessage);
             toast.error(errorMessage);
         } finally {
@@ -99,9 +99,9 @@ const ProductPage: React.FC = () => {
 
     // Get stock status
     const getStockStatus = (stock: number) => {
-        if (stock === 0) return { label: 'Out of Stock', className: 'bg-red-500/10 text-red-500 border-red-500/20' };
-        if (stock <= 10) return { label: 'Low Stock', className: 'bg-amber-500/10 text-amber-500 border-amber-500/20' };
-        return { label: 'In Stock', className: 'bg-green-500/10 text-green-500 border-green-500/20' };
+        if (stock === 0) return { label: 'Stok Habis', className: 'bg-red-500/10 text-red-500 border-red-500/20' };
+        if (stock <= 10) return { label: 'Stok Menipis', className: 'bg-amber-500/10 text-amber-500 border-amber-500/20' };
+        return { label: 'Tersedia', className: 'bg-green-500/10 text-green-500 border-green-500/20' };
     };
 
     // Generate page numbers
@@ -136,24 +136,24 @@ const ProductPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="text-left">
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Marketplace Products</h1>
-                    <p className="text-slate-500 mt-1">Oversee and manage product listings from all registered sellers.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Produk Marketplace</h1>
+                    <p className="text-slate-500 mt-1">Pantau dan kelola daftar produk dari semua penjual terdaftar.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/10 active:scale-95 text-sm">
+                    {/* <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/10 active:scale-95 text-sm">
                         <Plus className="w-4 h-4" />
                         New Listing
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                    { label: 'Total Products', value: totalItems.toLocaleString(), icon: Box, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-                    { label: 'Active Sellers', value: '184', icon: Store, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
-                    { label: 'Low Stock Alert', value: (products || []).filter(p => p.stock > 0 && p.stock <= 10).length.toString(), icon: Filter, color: 'text-amber-500', bg: 'bg-amber-500/10' },
-                    { label: 'Revenue (Today)', value: '$12,450', icon: DollarSign, color: 'text-green-500', bg: 'bg-green-500/10' },
+                    { label: 'Total Produk', value: totalItems.toLocaleString(), icon: Box, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+                    { label: 'Penjual Aktif', value: '184', icon: Store, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
+                    { label: 'Peringatan Stok Rendah', value: (products || []).filter(p => p.stock > 0 && p.stock <= 10).length.toString(), icon: Filter, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+                    { label: 'Pendapatan (Hari Ini)', value: 'Rp 12.450.000', icon: DollarSign, color: 'text-green-500', bg: 'bg-green-500/10' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-white border border-slate-200 p-6 rounded-2xl flex items-center justify-between group hover:border-slate-300 transition-all shadow-sm">
                         <div className="text-left">
@@ -173,7 +173,7 @@ const ProductPage: React.FC = () => {
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
                     <input
                         type="text"
-                        placeholder="Search product name..."
+                        placeholder="Cari nama produk..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
@@ -187,7 +187,7 @@ const ProductPage: React.FC = () => {
                             onChange={(e) => handleCategoryChange(e.target.value)}
                             className="bg-transparent border-none text-slate-600 text-sm focus:outline-none py-1.5 cursor-pointer appearance-none min-w-[140px]"
                         >
-                            <option value="">All Categories</option>
+                            <option value="">Semua Kategori</option>
                             {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                         </select>
                     </div>
@@ -214,13 +214,13 @@ const ProductPage: React.FC = () => {
                     <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
                         <AlertCircle className="w-8 h-8 text-red-500" />
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Failed to load products</h3>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Gagal memuat produk</h3>
                     <p className="text-slate-500 mb-4">{error}</p>
                     <button
                         onClick={() => fetchProducts()}
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-all"
                     >
-                        Try Again
+                        Coba Lagi
                     </button>
                 </div>
             )}
@@ -232,12 +232,12 @@ const ProductPage: React.FC = () => {
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr className="bg-slate-50 text-slate-500 text-[10px] font-bold uppercase tracking-widest border-b border-slate-200">
-                                    <th className="px-8 py-5">Product Info</th>
-                                    <th className="px-8 py-5">Seller</th>
-                                    <th className="px-8 py-5 text-center">Price</th>
-                                    <th className="px-8 py-5 text-center">Stock</th>
+                                    <th className="px-8 py-5">Info Produk</th>
+                                    <th className="px-8 py-5">Penjual</th>
+                                    <th className="px-8 py-5 text-center">Harga</th>
+                                    <th className="px-8 py-5 text-center">Stok</th>
                                     <th className="px-8 py-5 text-center">Status</th>
-                                    <th className="px-8 py-5 text-right">Actions</th>
+                                    <th className="px-8 py-5 text-right">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
@@ -247,8 +247,8 @@ const ProductPage: React.FC = () => {
                                             <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
                                                 <Box className="w-8 h-8 text-slate-400" />
                                             </div>
-                                            <h3 className="text-lg font-semibold text-slate-900 mb-2">No products found</h3>
-                                            <p className="text-slate-500">Try adjusting your search or filter criteria.</p>
+                                            <h3 className="text-lg font-semibold text-slate-900 mb-2">Produk tidak ditemukan</h3>
+                                            <p className="text-slate-500">Coba sesuaikan kriteria pencarian atau filter Anda.</p>
                                         </td>
                                     </tr>
                                 ) : (
@@ -272,21 +272,21 @@ const ProductPage: React.FC = () => {
                                                         <div className="min-w-0">
                                                             <p className="font-bold text-slate-900 text-base leading-tight group-hover:text-blue-600 transition-colors">{product.name}</p>
                                                             <p className="text-xs text-slate-400 mt-1 line-clamp-1">{product.description}</p>
-                                                            <p className="text-[10px] text-slate-400 font-medium mt-1">In {product.category}</p>
+                                                            <p className="text-[10px] text-slate-400 font-medium mt-1">Di {product.category}</p>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-8 py-6">
                                                     <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-xl border border-slate-200 w-fit">
                                                         <Store className="w-3.5 h-3.5 text-blue-500" />
-                                                        <span className="text-xs font-semibold text-slate-600">{product.seller?.username || 'Unknown'}</span>
+                                                        <span className="text-xs font-semibold text-slate-600">{product.seller?.username || 'Tidak Diketahui'}</span>
                                                     </div>
                                                 </td>
                                                 <td className="px-8 py-6 text-center">
                                                     <p className="font-bold text-slate-900 text-base">{formatPrice(product.price)}</p>
                                                 </td>
                                                 <td className="px-8 py-6 text-center">
-                                                    <p className="text-sm font-bold text-slate-900">{product.stock} <span className="text-slate-500 font-medium">units</span></p>
+                                                    <p className="text-sm font-bold text-slate-900">{product.stock} <span className="text-slate-500 font-medium">unit</span></p>
                                                 </td>
                                                 <td className="px-8 py-6 text-center">
                                                     <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest border transition-all ${stockStatus.className}`}>
@@ -295,10 +295,10 @@ const ProductPage: React.FC = () => {
                                                 </td>
                                                 <td className="px-8 py-6 text-right">
                                                     <div className="flex items-center justify-end gap-2">
-                                                        <button className="p-2.5 bg-slate-50 hover:bg-blue-50 text-slate-500 hover:text-blue-600 rounded-xl border border-slate-200 transition-all active:scale-90" title="Edit Product">
+                                                        <button className="p-2.5 bg-slate-50 hover:bg-blue-50 text-slate-500 hover:text-blue-600 rounded-xl border border-slate-200 transition-all active:scale-90" title="Edit Produk">
                                                             <Edit className="w-4 h-4" />
                                                         </button>
-                                                        <button className="p-2.5 bg-slate-50 hover:bg-red-50 text-slate-500 hover:text-red-600 rounded-xl border border-slate-200 transition-all" title="Delete Product">
+                                                        <button className="p-2.5 bg-slate-50 hover:bg-red-50 text-slate-500 hover:text-red-600 rounded-xl border border-slate-200 transition-all" title="Hapus Produk">
                                                             <Trash2 className="w-4 h-4" />
                                                         </button>
                                                         <button className="p-2.5 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-xl border border-slate-200 transition-all">
@@ -318,9 +318,9 @@ const ProductPage: React.FC = () => {
                     {products.length > 0 && (
                         <div className="p-6 border-t border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <p className="text-xs font-medium text-slate-500">
-                                Showing <span className="font-bold text-slate-700">{((currentPage - 1) * itemsPerPage) + 1}</span> to{' '}
-                                <span className="font-bold text-slate-700">{Math.min(currentPage * itemsPerPage, totalItems)}</span> of{' '}
-                                <span className="font-bold text-slate-700">{totalItems}</span> products
+                                Menampilkan <span className="font-bold text-slate-700">{((currentPage - 1) * itemsPerPage) + 1}</span> sampai{' '}
+                                <span className="font-bold text-slate-700">{Math.min(currentPage * itemsPerPage, totalItems)}</span> dari{' '}
+                                <span className="font-bold text-slate-700">{totalItems}</span> produk
                             </p>
 
                             {totalPages > 1 && (
@@ -329,7 +329,7 @@ const ProductPage: React.FC = () => {
                                         onClick={goToFirstPage}
                                         disabled={currentPage === 1}
                                         className="p-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                                        title="First page"
+                                        title="Halaman pertama"
                                     >
                                         <ChevronsLeft className="w-4 h-4" />
                                     </button>
@@ -337,7 +337,7 @@ const ProductPage: React.FC = () => {
                                         onClick={goToPreviousPage}
                                         disabled={currentPage === 1}
                                         className="p-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                                        title="Previous page"
+                                        title="Halaman sebelumnya"
                                     >
                                         <ChevronLeft className="w-4 h-4" />
                                     </button>
@@ -365,7 +365,7 @@ const ProductPage: React.FC = () => {
                                         onClick={goToNextPage}
                                         disabled={currentPage === totalPages}
                                         className="p-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                                        title="Next page"
+                                        title="Halaman berikutnya"
                                     >
                                         <ChevronRight className="w-4 h-4" />
                                     </button>
@@ -373,7 +373,7 @@ const ProductPage: React.FC = () => {
                                         onClick={goToLastPage}
                                         disabled={currentPage === totalPages}
                                         className="p-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                                        title="Last page"
+                                        title="Halaman terakhir"
                                     >
                                         <ChevronsRight className="w-4 h-4" />
                                     </button>

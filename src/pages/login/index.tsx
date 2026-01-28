@@ -17,10 +17,10 @@ const LoginPage: React.FC = () => {
 
         try {
             const response = await authService.login({ email, password });
-            toast.success(response.message || 'Login successful!');
+            toast.success(response.message || 'Login berhasil!');
             navigate('/main/dashboard');
         } catch (err: any) {
-            const errorMessage = err.response?.data?.message || 'Login failed. Please try again.';
+            const errorMessage = err.response?.data?.message || 'Login gagal. Silakan coba lagi.';
             toast.error(errorMessage);
         } finally {
             setIsLoading(false);
@@ -35,20 +35,21 @@ const LoginPage: React.FC = () => {
 
             <div className="w-full max-w-md p-8 relative">
                 {/* Logo & Brand */}
-                <div className="text-center mb-10">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-tr from-blue-600 to-indigo-600 mb-6 shadow-xl shadow-blue-500/20">
+                <div className="text-center">
+                    {/* <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-tr from-blue-600 to-indigo-600 mb-6 shadow-xl shadow-blue-500/20">
                         <Lock className="w-8 h-8 text-white" />
-                    </div>
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Pretty Shop</h1>
-                    <p className="text-slate-500">Please enter your details to access dashboard</p>
+                    </div> */}
+                    {/* <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Pretty Shop</h1> */}
+                    <img src="https://firebasestorage.googleapis.com/v0/b/pretty-shop-a071c.firebasestorage.app/o/LOGO_PRETTY_SHOP-removebg-preview.png?alt=media&token=2018f6ba-a4b1-47d7-848e-6c84d60274d7" alt="logo" />
+                    {/* <p className="text-slate-500">Please enter your details to access dashboard</p> */}
                 </div>
 
                 {/* Login Card */}
-                <div className="bg-white/70 backdrop-blur-xl border border-slate-200 p-8 rounded-3xl shadow-2xl shadow-slate-200/50">
+                <div className="bg-white/70 backdrop-blur-xl border border-slate-200 p-8 rounded-3xl shadow-2xl shadow-slate-200/50 -mt-10">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Email Field */}
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700 ml-1">Email Address</label>
+                            <label className="text-sm font-medium text-slate-700 ml-1">Alamat Email</label>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-blue-500 text-slate-500">
                                     <Mail className="w-5 h-5" />
@@ -65,10 +66,10 @@ const LoginPage: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Password Field */}
+                        {/* Kata Sandi Field */}
                         <div className="space-y-2">
                             <div className="flex items-center justify-between ml-1 text-sm font-medium">
-                                <label className="text-slate-700">Password</label>
+                                <label className="text-slate-700">Kata Sandi</label>
                             </div>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-blue-500 text-slate-500">
@@ -92,7 +93,7 @@ const LoginPage: React.FC = () => {
                                 </button>
                             </div>
                             <div className='text-right'>
-                                <Link to="/forgot-password" title="Forgot Password" className="text-blue-600 hover:text-blue-500 transition-colors text-right">Forgot Password?</Link>
+                                <Link to="/forgot-password" title="Lupa Kata Sandi" className="text-blue-600 hover:text-blue-500 transition-colors text-right">Lupa Kata Sandi?</Link>
                             </div>
                         </div>
 
@@ -105,11 +106,11 @@ const LoginPage: React.FC = () => {
                             {isLoading ? (
                                 <>
                                     <Loader2 className="w-5 h-5 animate-spin" />
-                                    Logging in...
+                                    Masuk...
                                 </>
                             ) : (
                                 <>
-                                    Log In
+                                    Masuk
                                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </>
                             )}

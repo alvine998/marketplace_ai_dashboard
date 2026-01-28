@@ -31,21 +31,21 @@ const CustomerPage: React.FC = () => {
 
     // Extended mock data
     const allCustomers: Customer[] = [
-        { id: '1', name: 'Alvin Yoga', email: 'alvin@example.com', phone: '+62 812-3456-7890', location: 'Jakarta, ID', joined: 'Oct 12, 2023', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Alvin+Yoga&background=0ea5e9&color=fff' },
-        { id: '2', name: 'Sarah Miller', email: 'sarah.m@hey.com', phone: '+1 (555) 001-2345', location: 'London, UK', joined: 'Nov 05, 2023', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Sarah+Miller&background=8b5cf6&color=fff' },
-        { id: '3', name: 'John Smith', email: 'johnsmith@gmail.com', phone: '+1 (555) 987-6543', location: 'New York, US', joined: 'Dec 01, 2023', status: 'Inactive', avatar: 'https://ui-avatars.com/api/?name=John+Smith&background=10b981&color=fff' },
-        { id: '4', name: 'Elena Rodriguez', email: 'elena.r@corporate.com', phone: '+34 912 345 678', location: 'Madrid, ES', joined: 'Jan 15, 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Elena+Rodriguez&background=f59e0b&color=fff' },
-        { id: '5', name: 'Hiroshi Tanaka', email: 'hiro@tech.jp', phone: '+81 90-1234-5678', location: 'Tokyo, JP', joined: 'Feb 20, 2024', status: 'Pending', avatar: 'https://ui-avatars.com/api/?name=Hiroshi+Tanaka&background=ef4444&color=fff' },
-        { id: '6', name: 'Maria Santos', email: 'maria.santos@mail.com', phone: '+55 11 9876-5432', location: 'São Paulo, BR', joined: 'Mar 10, 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Maria+Santos&background=ec4899&color=fff' },
-        { id: '7', name: 'David Chen', email: 'david.chen@company.cn', phone: '+86 138-0013-8000', location: 'Shanghai, CN', joined: 'Mar 25, 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=David+Chen&background=14b8a6&color=fff' },
-        { id: '8', name: 'Anna Kowalski', email: 'anna.k@email.pl', phone: '+48 501 234 567', location: 'Warsaw, PL', joined: 'Apr 02, 2024', status: 'Inactive', avatar: 'https://ui-avatars.com/api/?name=Anna+Kowalski&background=6366f1&color=fff' },
-        { id: '9', name: 'Michael Brown', email: 'michael.b@enterprise.com', phone: '+1 (555) 123-4567', location: 'Chicago, US', joined: 'Apr 18, 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Michael+Brown&background=84cc16&color=fff' },
-        { id: '10', name: 'Yuki Yamamoto', email: 'yuki.y@company.jp', phone: '+81 80-9876-5432', location: 'Osaka, JP', joined: 'May 05, 2024', status: 'Pending', avatar: 'https://ui-avatars.com/api/?name=Yuki+Yamamoto&background=f97316&color=fff' },
-        { id: '11', name: 'Pierre Dupont', email: 'pierre.d@mail.fr', phone: '+33 6 12 34 56 78', location: 'Paris, FR', joined: 'May 20, 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Pierre+Dupont&background=0891b2&color=fff' },
-        { id: '12', name: 'Sophie Williams', email: 'sophie.w@startup.com', phone: '+44 7700 900123', location: 'Manchester, UK', joined: 'Jun 01, 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Sophie+Williams&background=a855f7&color=fff' },
-        { id: '13', name: 'Ahmed Hassan', email: 'ahmed.h@business.ae', phone: '+971 50 123 4567', location: 'Dubai, AE', joined: 'Jun 15, 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Ahmed+Hassan&background=dc2626&color=fff' },
-        { id: '14', name: 'Lisa Anderson', email: 'lisa.a@corp.com', phone: '+1 (555) 234-5678', location: 'Seattle, US', joined: 'Jul 02, 2024', status: 'Inactive', avatar: 'https://ui-avatars.com/api/?name=Lisa+Anderson&background=059669&color=fff' },
-        { id: '15', name: 'Marco Rossi', email: 'marco.r@azienda.it', phone: '+39 348 123 4567', location: 'Milan, IT', joined: 'Jul 18, 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Marco+Rossi&background=7c3aed&color=fff' },
+        { id: '1', name: 'Alvin Yoga', email: 'alvin@example.com', phone: '+62 812-3456-7890', location: 'Jakarta, ID', joined: '12 Okt 2023', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Alvin+Yoga&background=0ea5e9&color=fff' },
+        { id: '2', name: 'Sarah Miller', email: 'sarah.m@hey.com', phone: '+1 (555) 001-2345', location: 'London, UK', joined: '05 Nov 2023', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Sarah+Miller&background=8b5cf6&color=fff' },
+        { id: '3', name: 'John Smith', email: 'johnsmith@gmail.com', phone: '+1 (555) 987-6543', location: 'New York, US', joined: '01 Des 2023', status: 'Inactive', avatar: 'https://ui-avatars.com/api/?name=John+Smith&background=10b981&color=fff' },
+        { id: '4', name: 'Elena Rodriguez', email: 'elena.r@corporate.com', phone: '+34 912 345 678', location: 'Madrid, ES', joined: '15 Jan 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Elena+Rodriguez&background=f59e0b&color=fff' },
+        { id: '5', name: 'Hiroshi Tanaka', email: 'hiro@tech.jp', phone: '+81 90-1234-5678', location: 'Tokyo, JP', joined: '20 Feb 2024', status: 'Pending', avatar: 'https://ui-avatars.com/api/?name=Hiroshi+Tanaka&background=ef4444&color=fff' },
+        { id: '6', name: 'Maria Santos', email: 'maria.santos@mail.com', phone: '+55 11 9876-5432', location: 'São Paulo, BR', joined: '10 Mar 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Maria+Santos&background=ec4899&color=fff' },
+        { id: '7', name: 'David Chen', email: 'david.chen@company.cn', phone: '+86 138-0013-8000', location: 'Shanghai, CN', joined: '25 Mar 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=David+Chen&background=14b8a6&color=fff' },
+        { id: '8', name: 'Anna Kowalski', email: 'anna.k@email.pl', phone: '+48 501 234 567', location: 'Warsaw, PL', joined: '02 Apr 2024', status: 'Inactive', avatar: 'https://ui-avatars.com/api/?name=Anna+Kowalski&background=6366f1&color=fff' },
+        { id: '9', name: 'Michael Brown', email: 'michael.b@enterprise.com', phone: '+1 (555) 123-4567', location: 'Chicago, US', joined: '18 Apr 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Michael+Brown&background=84cc16&color=fff' },
+        { id: '10', name: 'Yuki Yamamoto', email: 'yuki.y@company.jp', phone: '+81 80-9876-5432', location: 'Osaka, JP', joined: '05 Mei 2024', status: 'Pending', avatar: 'https://ui-avatars.com/api/?name=Yuki+Yamamoto&background=f97316&color=fff' },
+        { id: '11', name: 'Pierre Dupont', email: 'pierre.d@mail.fr', phone: '+33 6 12 34 56 78', location: 'Paris, FR', joined: '20 Mei 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Pierre+Dupont&background=0891b2&color=fff' },
+        { id: '12', name: 'Sophie Williams', email: 'sophie.w@startup.com', phone: '+44 7700 900123', location: 'Manchester, UK', joined: '01 Jun 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Sophie+Williams&background=a855f7&color=fff' },
+        { id: '13', name: 'Ahmed Hassan', email: 'ahmed.h@business.ae', phone: '+971 50 123 4567', location: 'Dubai, AE', joined: '15 Jun 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Ahmed+Hassan&background=dc2626&color=fff' },
+        { id: '14', name: 'Lisa Anderson', email: 'lisa.a@corp.com', phone: '+1 (555) 234-5678', location: 'Seattle, US', joined: '02 Jul 2024', status: 'Inactive', avatar: 'https://ui-avatars.com/api/?name=Lisa+Anderson&background=059669&color=fff' },
+        { id: '15', name: 'Marco Rossi', email: 'marco.r@azienda.it', phone: '+39 348 123 4567', location: 'Milan, IT', joined: '18 Jul 2024', status: 'Active', avatar: 'https://ui-avatars.com/api/?name=Marco+Rossi&background=7c3aed&color=fff' },
     ];
 
     // Filter customers based on search query
@@ -105,12 +105,12 @@ const CustomerPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight text-left">Customers</h1>
-                    <p className="text-slate-500 mt-1">Manage your customer relationships and data.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight text-left">Pelanggan</h1>
+                    <p className="text-slate-500 mt-1">Kelola hubungan dan data pelanggan Anda.</p>
                 </div>
                 <button className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
                     <UserPlus className="w-5 h-5" />
-                    New Customer
+                    Pelanggan Baru
                 </button>
             </div>
 
@@ -122,22 +122,22 @@ const CustomerPage: React.FC = () => {
                         type="text"
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        placeholder="Search by name, email, or country..."
+                        placeholder="Cari berdasarkan nama, email, atau negara..."
                         className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all shadow-sm"
                     />
                 </div>
                 <button className="flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">
                     <Filter className="w-5 h-5" />
-                    Filters
+                    Filter
                 </button>
             </div>
 
             {/* Results Info */}
             <div className="flex items-center justify-between">
                 <p className="text-sm text-slate-500">
-                    Showing <span className="font-semibold text-slate-700">{startIndex + 1}</span> to{' '}
-                    <span className="font-semibold text-slate-700">{Math.min(endIndex, filteredCustomers.length)}</span> of{' '}
-                    <span className="font-semibold text-slate-700">{filteredCustomers.length}</span> customers
+                    Menampilkan <span className="font-semibold text-slate-700">{startIndex + 1}</span> sampai{' '}
+                    <span className="font-semibold text-slate-700">{Math.min(endIndex, filteredCustomers.length)}</span> dari{' '}
+                    <span className="font-semibold text-slate-700">{filteredCustomers.length}</span> pelanggan
                 </p>
             </div>
 
@@ -147,13 +147,13 @@ const CustomerPage: React.FC = () => {
                     <table className="w-full">
                         <thead>
                             <tr className="bg-slate-50 border-b border-slate-200">
-                                <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Customer</th>
+                                <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Pelanggan</th>
                                 <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</th>
-                                <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Phone</th>
-                                <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Location</th>
-                                <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Joined</th>
+                                <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Telepon</th>
+                                <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Lokasi</th>
+                                <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Bergabung</th>
                                 <th className="text-left py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                                <th className="text-center py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+                                <th className="text-center py-4 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">Aksi</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -184,18 +184,18 @@ const CustomerPage: React.FC = () => {
                                                     ? 'bg-amber-500'
                                                     : 'bg-slate-400'
                                                 }`} />
-                                            {customer.status}
+                                            {customer.status === 'Active' ? 'Aktif' : customer.status === 'Pending' ? 'Tertunda' : 'Tidak Aktif'}
                                         </span>
                                     </td>
                                     <td className="py-4 px-6">
                                         <div className="flex items-center justify-center gap-1">
-                                            <button className="p-2 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all" title="View">
+                                            <button className="p-2 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all" title="Lihat">
                                                 <Eye className="w-4 h-4" />
                                             </button>
-                                            <button className="p-2 rounded-lg text-slate-400 hover:text-amber-600 hover:bg-amber-50 transition-all" title="Edit">
+                                            <button className="p-2 rounded-lg text-slate-400 hover:text-amber-600 hover:bg-amber-50 transition-all" title="Ubah">
                                                 <Pencil className="w-4 h-4" />
                                             </button>
-                                            <button className="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-all" title="Delete">
+                                            <button className="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-all" title="Hapus">
                                                 <Trash2 className="w-4 h-4" />
                                             </button>
                                         </div>
@@ -212,8 +212,8 @@ const CustomerPage: React.FC = () => {
                         <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
                             <Search className="w-8 h-8 text-slate-400" />
                         </div>
-                        <h3 className="text-lg font-semibold text-slate-900 mb-2">No customers found</h3>
-                        <p className="text-slate-500">Try adjusting your search query or filters.</p>
+                        <h3 className="text-lg font-semibold text-slate-900 mb-2">Pelanggan tidak ditemukan</h3>
+                        <p className="text-slate-500">Coba sesuaikan kriteria pencarian atau filter Anda.</p>
                     </div>
                 )}
             </div>

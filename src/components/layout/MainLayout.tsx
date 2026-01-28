@@ -12,7 +12,6 @@ import {
     ChevronRight,
     ChevronDown,
     Package,
-    BarChart3,
     MessageSquare,
     Megaphone,
     Smartphone,
@@ -21,14 +20,19 @@ import {
     ShieldCheck,
     Layers,
     History,
-    Activity
+    Activity,
+    Ticket,
+    Rss,
+    FolderTree,
+    Info,
+    HelpCircle
 } from 'lucide-react';
 import authService, { User } from '../../services/auth.service';
 
 const MainLayout: React.FC = () => {
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [expandedMenus, setExpandedMenus] = useState<string[]>(['Settings']);
+    const [expandedMenus, setExpandedMenus] = useState<string[]>(['Pengaturan']);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const searchRef = useRef<HTMLDivElement>(null);
@@ -73,21 +77,26 @@ const MainLayout: React.FC = () => {
 
     const menuItems: MenuItem[] = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/main/dashboard' },
-        { icon: MessageSquare, label: 'AI Chat Orders', path: '/main/ai-orders' },
-        { icon: Megaphone, label: 'Promotions', path: '/main/promos' },
-        { icon: Store, label: 'Sellers', path: '/main/sellers' },
-        { icon: Package, label: 'Products', path: '/main/products' },
-        { icon: Users, label: 'Customers', path: '/main/customers' },
+        { icon: MessageSquare, label: 'AI Chat', path: '/main/ai-orders' },
+        { icon: Megaphone, label: 'Promosi', path: '/main/promos' },
+        { icon: Ticket, label: 'Voucher', path: '/main/vouchers' },
+        { icon: Store, label: 'Penjual', path: '/main/sellers' },
+        { icon: Package, label: 'Produk', path: '/main/products' },
+        { icon: Users, label: 'Pelanggan', path: '/main/customers' },
+        { icon: Rss, label: 'Feed', path: '/main/feed' },
         {
             icon: Settings,
-            label: 'Settings',
+            label: 'Pengaturan',
             subItems: [
-                { icon: Shield, label: 'Admin Management', path: '/main/settings/admin' },
-                { icon: ShieldCheck, label: 'Roles & Permissions', path: '/main/settings/roles' },
-                { icon: Activity, label: 'Activity Logs', path: '/main/settings/activity-logs' },
-                { icon: History, label: 'Login Attempts', path: '/main/settings/login-attempts' },
-                { icon: Smartphone, label: 'Push Notification', path: '/main/push-notifications' },
-                { icon: Layers, label: 'Product Category', path: '/main/settings/categories' },
+                { icon: Shield, label: 'Manajemen Admin', path: '/main/settings/admin' },
+                { icon: ShieldCheck, label: 'Peran & Izin', path: '/main/settings/roles' },
+                { icon: Activity, label: 'Log Aktivitas', path: '/main/settings/activity-logs' },
+                { icon: History, label: 'Percobaan Login', path: '/main/settings/login-attempts' },
+                { icon: Smartphone, label: 'Notifikasi Push', path: '/main/push-notifications' },
+                { icon: Layers, label: 'Kategori Produk', path: '/main/settings/categories' },
+                { icon: FolderTree, label: 'Sub Kategori', path: '/main/subcategories' },
+                { icon: Info, label: 'Tentang Kami', path: '/main/about-us' },
+                { icon: HelpCircle, label: 'FAQ', path: '/main/faq' },
             ]
         },
     ];
@@ -151,6 +160,14 @@ const MainLayout: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex">
+            {/* Mobile Sidebar Overlay */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+
             {/* Sidebar */}
             <aside
                 className={`fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -237,21 +254,23 @@ const MainLayout: React.FC = () => {
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
                 {/* Topbar */}
-                <header className="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-40">
-                    <div className="flex items-center gap-4">
+                <header className="h-14 sm:h-16 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-3 sm:px-4 lg:px-8 sticky top-0 z-40">
+                    <div className="flex items-center gap-2 sm:gap-4 flex-1">
                         <button
                             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                            className="lg:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
+                            className="lg:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors active:scale-95 touch-manipulation"
                         >
-                            {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                            {isSidebarOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
                         </button>
+
+                        {/* Desktop Search */}
                         <div ref={searchRef} className="relative hidden md:block">
                             <div className="flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-xl px-4 py-1.5 w-80 group focus-within:ring-2 focus-within:ring-blue-500/50 transition-all">
                                 <Search className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500" />
                                 <input
                                     id="global-search"
                                     type="text"
-                                    placeholder="Search features... (⌘K)"
+                                    placeholder="Cari fitur... (⌘K)"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     onFocus={() => setIsSearchFocused(true)}
@@ -265,7 +284,7 @@ const MainLayout: React.FC = () => {
                                     {searchResults.length > 0 ? (
                                         <div className="py-2">
                                             <div className="px-4 py-2 border-b border-slate-50">
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Search Results</p>
+                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Hasil Pencarian</p>
                                             </div>
                                             <div className="max-h-[320px] overflow-y-auto custom-scrollbar">
                                                 {searchResults.map((result) => (
@@ -295,32 +314,47 @@ const MainLayout: React.FC = () => {
                                             <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mx-auto mb-3">
                                                 <Search className="w-6 h-6 text-slate-300" />
                                             </div>
-                                            <p className="text-sm text-slate-500">No results found for "<span className="text-slate-900 font-bold">{searchQuery}</span>"</p>
+                                            <p className="text-sm text-slate-500">Tidak ada hasil untuk "<span className="text-slate-900 font-bold">{searchQuery}</span>"</p>
                                         </div>
                                     ) : null}
                                 </div>
                             )}
                         </div>
+
+                        {/* Mobile Search Button */}
+                        <button
+                            onClick={() => {
+                                const searchInput = document.getElementById('global-search') as HTMLInputElement;
+                                if (searchInput) {
+                                    searchRef.current?.classList.remove('hidden');
+                                    searchRef.current?.classList.add('block');
+                                    searchInput.focus();
+                                }
+                            }}
+                            className="md:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
+                        >
+                            <Search className="w-5 h-5" />
+                        </button>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <Link to="/main/notifications" className="relative p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors">
+                    <div className="flex items-center gap-2 sm:gap-4">
+                        <Link to="/main/notifications" className="relative p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors active:scale-95 touch-manipulation">
                             <Bell className="w-5 h-5" />
-                            <span className="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full border-2 border-white" />
+                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full border-2 border-white" />
                         </Link>
-                        <div className="h-8 w-px bg-slate-200 mx-2" />
-                        <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
+                        <div className="h-8 w-px bg-slate-200 hidden sm:block" />
+                        <div className="flex items-center gap-2 sm:gap-3">
                             <div className="text-right hidden sm:block">
-                                <p className="text-sm font-semibold text-slate-900">{user?.username || 'Guest'}</p>
+                                <p className="text-sm font-semibold text-slate-900 truncate max-w-[120px]">{user?.username || 'Tamu'}</p>
                                 <p className="text-xs text-slate-500">Administrator</p>
                             </div>
-                            <div className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden">
-                                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.username || 'Guest')}&background=0ea5e9&color=fff`} alt="Avatar" />
+                            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
+                                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.username || 'Guest')}&background=0ea5e9&color=fff`} alt="Avatar" className="w-full h-full object-cover" />
                             </div>
                             <button
                                 onClick={handleLogout}
-                                className="ml-2 p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"
-                                title="Logout"
+                                className="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all active:scale-95 touch-manipulation"
+                                title="Keluar"
                             >
                                 <LogOut className="w-5 h-5" />
                             </button>
@@ -329,7 +363,7 @@ const MainLayout: React.FC = () => {
                 </header>
 
                 {/* Dashboard Content */}
-                <main className="flex-1 overflow-y-auto p-4 lg:p-8">
+                <main className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-8">
                     <Outlet />
                 </main>
             </div>

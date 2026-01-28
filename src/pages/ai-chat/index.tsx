@@ -19,18 +19,18 @@ const AIChatPage: React.FC = () => {
     const [selectedChat, setSelectedChat] = useState('1');
 
     const chats = [
-        { id: '1', name: 'John Doe', lastMsg: 'Does it come in blue?', time: '2m ago', unread: true, status: 'AI Active' },
-        { id: '2', name: 'Sarah Miller', lastMsg: 'Thank you for the help!', time: '15m ago', unread: false, status: 'Completed' },
-        { id: '3', name: 'Robert Fox', lastMsg: 'When will it ship?', time: '1h ago', unread: false, status: 'AI Active' },
-        { id: '4', name: 'Elena Rodriguez', lastMsg: 'Interested in bulk orders.', time: '3h ago', unread: true, status: 'AI Active' },
+        { id: '1', name: 'John Doe', lastMsg: 'Apakah ada warna biru?', time: '2mnt lalu', unread: true, status: 'AI Aktif' },
+        { id: '2', name: 'Sarah Miller', lastMsg: 'Terima kasih atas bantuannya!', time: '15mnt lalu', unread: false, status: 'Selesai' },
+        { id: '3', name: 'Robert Fox', lastMsg: 'Kapan akan dikirim?', time: '1jam lalu', unread: false, status: 'AI Aktif' },
+        { id: '4', name: 'Elena Rodriguez', lastMsg: 'Tertarik dengan pesanan grosir.', time: '3jam lalu', unread: true, status: 'AI Aktif' },
     ];
 
     const messages = [
-        { id: 1, sender: 'buyer', text: 'Hello! I am interested in the Premium Wireless Headphones.', time: '10:00 AM' },
-        { id: 2, sender: 'ai', text: 'Hello! Glad to hear that. The Premium Wireless Headphones are one of our best-sellers. How can I help you today?', time: '10:00 AM' },
-        { id: 3, sender: 'buyer', text: 'Does it come with a carrying case?', time: '10:01 AM' },
-        { id: 4, sender: 'ai', text: 'Yes, it comes with a high-quality hardshell carrying case, a USB-C charging cable, and a 3.5mm audio cable for wired use.', time: '10:01 AM' },
-        { id: 5, sender: 'buyer', text: 'Great. What about the battery life?', time: '10:02 AM' },
+        { id: 1, sender: 'buyer', text: 'Halo! Saya tertarik dengan Headphone Wireless Premium.', time: '10:00' },
+        { id: 2, sender: 'ai', text: 'Halo! Senang mendengarnya. Headphone Wireless Premium adalah salah satu produk terlaris kami. Apa yang bisa saya bantu hari ini?', time: '10:00' },
+        { id: 3, sender: 'buyer', text: 'Apakah sudah termasuk tas penyimpanan?', time: '10:01' },
+        { id: 4, sender: 'ai', text: 'Ya, sudah termasuk tas penyimpanan hardshell berkualitas tinggi, kabel pengisi daya USB-C, dan kabel audio 3.5mm untuk penggunaan kabel.', time: '10:01' },
+        { id: 5, sender: 'buyer', text: 'Bagus. Bagaimana dengan daya tahan baterai?', time: '10:02' },
     ];
 
     return (
@@ -39,7 +39,7 @@ const AIChatPage: React.FC = () => {
             <div className="w-80 border-r border-slate-200 flex flex-col bg-slate-50/50">
                 <div className="p-6 border-b border-slate-200">
                     <div className="flex items-center justify-between mb-4 text-left">
-                        <h2 className="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Buyer Messages</h2>
+                        <h2 className="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Pesan Pembeli</h2>
                         <button className="text-slate-400 hover:text-slate-900 transition-colors">
                             <History className="w-5 h-5" />
                         </button>
@@ -48,7 +48,7 @@ const AIChatPage: React.FC = () => {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                         <input
                             type="text"
-                            placeholder="Search chats..."
+                            placeholder="Cari percakapan..."
                             className="w-full bg-white border border-slate-200 rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-slate-900 placeholder-slate-400"
                         />
                     </div>
@@ -74,7 +74,7 @@ const AIChatPage: React.FC = () => {
                                     <span className="text-[10px] text-slate-400">{chat.time}</span>
                                 </div>
                                 <p className="text-xs text-slate-500 truncate mb-1">{chat.lastMsg}</p>
-                                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium ${chat.status === 'Completed' ? 'bg-slate-200 text-slate-500' : 'bg-blue-100 text-blue-600'
+                                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium ${chat.status === 'Selesai' ? 'bg-slate-200 text-slate-500' : 'bg-blue-100 text-blue-600'
                                     }`}>
                                     {chat.status}
                                 </span>
@@ -95,14 +95,14 @@ const AIChatPage: React.FC = () => {
                         <div>
                             <p className="text-sm font-bold text-slate-900">John Doe</p>
                             <p className="text-[10px] text-green-600 flex items-center gap-1 font-medium">
-                                <Circle className="w-1.5 h-1.5 fill-current" /> Online
+                                <Circle className="w-1.5 h-1.5 fill-current" /> Daring
                             </p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full border border-blue-100">
                             <Sparkles className="w-3.5 h-3.5" />
-                            <span className="text-xs font-bold uppercase tracking-widest">AI Responding</span>
+                            <span className="text-xs font-bold uppercase tracking-widest">AI Menjawab</span>
                         </div>
                         <button className="text-slate-400 hover:text-slate-900 transition-colors">
                             <MoreVertical className="w-5 h-5" />
@@ -121,7 +121,7 @@ const AIChatPage: React.FC = () => {
                                     }`}>
                                     {msg.sender === 'ai' && (
                                         <div className="absolute -top-7 right-0 text-[10px] font-bold text-blue-400 flex items-center gap-1">
-                                            <Bot className="w-3 h-3" /> Smart AI
+                                            <Bot className="w-3 h-3" /> AI Pintar
                                         </div>
                                     )}
                                     <p className="text-sm leading-relaxed">{msg.text}</p>
@@ -139,7 +139,7 @@ const AIChatPage: React.FC = () => {
                                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                             </div>
-                            <span className="text-[10px] text-slate-500 font-medium font-['Inter']">AI is crafting a response...</span>
+                            <span className="text-[10px] text-slate-500 font-medium font-['Inter']">AI sedang menyusun jawaban...</span>
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ const AIChatPage: React.FC = () => {
                 <div className="p-6 border-t border-slate-200 bg-white">
                     <div className="relative group">
                         <textarea
-                            placeholder="Manually reply or let AI handle it..."
+                            placeholder="Balas manual atau biarkan AI menanganinya..."
                             rows={1}
                             className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-6 pr-32 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none group-focus-within:border-blue-500/50 text-slate-900 placeholder-slate-400"
                         />
@@ -168,7 +168,7 @@ const AIChatPage: React.FC = () => {
             <div className="w-72 border-l border-slate-200 flex flex-col bg-slate-50/50">
                 <div className="p-6 border-b border-slate-200 flex items-center gap-2 bg-white">
                     <Settings2 className="w-5 h-5 text-blue-500" />
-                    <h2 className="text-sm font-bold text-slate-900 uppercase tracking-widest">AI Settings</h2>
+                    <h2 className="text-sm font-bold text-slate-900 uppercase tracking-widest">Pengaturan AI</h2>
                 </div>
                 <div className="flex-1 overflow-y-auto p-6 space-y-8">
                     {/* Status Toggle */}
@@ -176,7 +176,7 @@ const AIChatPage: React.FC = () => {
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <Bot className="w-4 h-4 text-blue-400" />
-                                <span className="text-xs font-bold text-slate-200">System Active</span>
+                                <span className="text-xs font-bold text-slate-200">Sistem Aktif</span>
                             </div>
                             <button
                                 onClick={() => setIsAIEnabled(!isAIEnabled)}
@@ -186,18 +186,18 @@ const AIChatPage: React.FC = () => {
                             </button>
                         </div>
                         <p className="text-[10px] text-slate-500 leading-relaxed">
-                            When enabled, the AI will automatically handle all incoming buyer queries based on your store data.
+                            Saat diaktifkan, AI akan secara otomatis menangani semua pertanyaan pembeli yang masuk berdasarkan data toko Anda.
                         </p>
                     </div>
 
                     {/* AI Tone */}
                     <div className="space-y-4">
                         <label className="text-xs font-bold text-slate-300 flex items-center gap-2">
-                            <Brain className="w-4 h-4 text-purple-400" /> Interaction Tone
+                            <Brain className="w-4 h-4 text-purple-400" /> Nada Interaksi
                         </label>
                         <div className="grid grid-cols-2 gap-2">
-                            {['Professional', 'Friendly', 'Concise', 'Detailed'].map((tone) => (
-                                <button key={tone} className={`px-3 py-2 rounded-lg text-[10px] font-bold border transition-all ${tone === 'Friendly'
+                            {['Profesional', 'Ramah', 'Singkat', 'Detail'].map((tone) => (
+                                <button key={tone} className={`px-3 py-2 rounded-lg text-[10px] font-bold border transition-all ${tone === 'Ramah'
                                     ? 'bg-blue-600/10 border-blue-500/50 text-blue-400'
                                     : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
                                     }`}>
@@ -209,18 +209,18 @@ const AIChatPage: React.FC = () => {
 
                     {/* Quick Stats */}
                     <div className="pt-6 border-t border-slate-800 space-y-4 text-left">
-                        <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Performance</h3>
+                        <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Performa</h3>
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
-                                <span className="text-xs text-slate-400">Total AI Replies</span>
+                                <span className="text-xs text-slate-400">Total Balasan AI</span>
                                 <span className="text-xs font-bold text-white">1,284</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-xs text-slate-400">Time Saved</span>
-                                <span className="text-xs font-bold text-green-400">~12.5 hrs</span>
+                                <span className="text-xs text-slate-400">Waktu Tersimpan</span>
+                                <span className="text-xs font-bold text-green-400">~12.5 jam</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-xs text-slate-400">Human Intervention</span>
+                                <span className="text-xs text-slate-400">Intervensi Manusia</span>
                                 <span className="text-xs font-bold text-amber-400">8.2%</span>
                             </div>
                         </div>
@@ -230,11 +230,11 @@ const AIChatPage: React.FC = () => {
                 {/* Subscription Upgrade */}
                 <div className="p-4 m-4 bg-linear-to-br from-indigo-600/20 to-blue-600/20 border border-blue-500/20 rounded-2xl">
                     <p className="text-[10px] font-bold text-blue-400 mb-2 flex items-center gap-1 uppercase tracking-tighter">
-                        <Sparkles className="w-3 h-3" /> AI Credit Low
+                        <Sparkles className="w-3 h-3" /> Kredit AI Rendah
                     </p>
-                    <p className="text-xs text-slate-300 mb-3 leading-tight">Your AI assistant has handled 95 messages this month.</p>
+                    <p className="text-xs text-slate-300 mb-3 leading-tight">Asisten AI Anda telah menangani 95 pesan bulan ini.</p>
                     <button className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold rounded-lg transition-all active:scale-95 shadow-lg shadow-blue-500/20">
-                        Top Up Credits
+                        Top Up Kredit
                     </button>
                 </div>
             </div>

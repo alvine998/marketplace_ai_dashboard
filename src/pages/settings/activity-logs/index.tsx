@@ -60,7 +60,7 @@ const ActivityLogsPage: React.FC = () => {
             setTotalPages(response.totalPages || 1);
             setTotalItems(response.totalItems || 0);
         } catch (err: any) {
-            const errorMessage = err.response?.data?.message || 'Failed to fetch activity logs';
+            const errorMessage = err.response?.data?.message || 'Gagal mengambil log aktivitas';
             setError(errorMessage);
             toast.error(errorMessage);
         } finally {
@@ -91,8 +91,8 @@ const ActivityLogsPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="text-left">
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Activity Logs</h1>
-                    <p className="text-slate-500 mt-1">Audit trail of all administrative actions performed on the platform.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Log Aktivitas</h1>
+                    <p className="text-slate-500 mt-1">Jejak audit dari semua tindakan administratif yang dilakukan di platform.</p>
                 </div>
             </div>
 
@@ -103,7 +103,7 @@ const ActivityLogsPage: React.FC = () => {
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                         <input
                             type="text"
-                            placeholder="Search logs by action or details..."
+                            placeholder="Cari log berdasarkan aksi atau detail..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pl-10 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
@@ -114,7 +114,7 @@ const ActivityLogsPage: React.FC = () => {
                         className="flex items-center gap-2 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-100 transition-all"
                     >
                         <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                        Refresh
+                        Segarkan
                     </button>
                 </div>
 
@@ -127,13 +127,13 @@ const ActivityLogsPage: React.FC = () => {
                         <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
                             <AlertCircle className="w-8 h-8 text-red-500" />
                         </div>
-                        <h3 className="text-lg font-semibold text-slate-900 mb-2">Failed to load logs</h3>
+                        <h3 className="text-lg font-semibold text-slate-900 mb-2">Gagal memuat log</h3>
                         <p className="text-slate-500 mb-4">{error}</p>
                         <button
                             onClick={() => fetchLogs()}
                             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-all"
                         >
-                            Try Again
+                            Coba Lagi
                         </button>
                     </div>
                 ) : (
@@ -141,11 +141,11 @@ const ActivityLogsPage: React.FC = () => {
                         <table className="w-full">
                             <thead>
                                 <tr className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-widest border-b border-slate-200">
-                                    <th className="px-8 py-5">User ID</th>
-                                    <th className="px-8 py-5">Action</th>
-                                    <th className="px-8 py-5">IP Address</th>
-                                    <th className="px-8 py-5">Details</th>
-                                    <th className="px-8 py-5">Timestamp</th>
+                                    <th className="px-8 py-5">ID Pengguna</th>
+                                    <th className="px-8 py-5">Aksi</th>
+                                    <th className="px-8 py-5">Alamat IP</th>
+                                    <th className="px-8 py-5">Detail</th>
+                                    <th className="px-8 py-5">Waktu</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100 text-left">
@@ -155,8 +155,8 @@ const ActivityLogsPage: React.FC = () => {
                                             <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
                                                 <Activity className="w-8 h-8 text-slate-400" />
                                             </div>
-                                            <h3 className="text-lg font-semibold text-slate-900 mb-2">No activity logs found</h3>
-                                            <p className="text-slate-500">Try adjusting your search criteria.</p>
+                                            <h3 className="text-lg font-semibold text-slate-900 mb-2">Tidak ada log aktivitas ditemukan</h3>
+                                            <p className="text-slate-500">Coba sesuaikan kriteria pencarian Anda.</p>
                                         </td>
                                     </tr>
                                 ) : (
@@ -192,7 +192,7 @@ const ActivityLogsPage: React.FC = () => {
                                                                     <span className="truncate">{JSON.stringify(value)}</span>
                                                                 </div>
                                                             ))}
-                                                            {(!log.details || Object.keys(log.details).length === 0) && <span className="text-slate-400 italic">No extra details</span>}
+                                                            {(!log.details || Object.keys(log.details).length === 0) && <span className="text-slate-400 italic">Tidak ada detail tambahan</span>}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -215,9 +215,9 @@ const ActivityLogsPage: React.FC = () => {
                 {!loading && !error && logs.length > 0 && (
                     <div className="p-6 border-t border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <p className="text-xs font-medium text-slate-500">
-                            Showing <span className="font-bold text-slate-700">{((currentPage - 1) * itemsPerPage) + 1}</span> to{' '}
-                            <span className="font-bold text-slate-700">{Math.min(currentPage * itemsPerPage, totalItems)}</span> of{' '}
-                            <span className="font-bold text-slate-700">{totalItems}</span> logs
+                            Menampilkan <span className="font-bold text-slate-700">{((currentPage - 1) * itemsPerPage) + 1}</span> sampai{' '}
+                            <span className="font-bold text-slate-700">{Math.min(currentPage * itemsPerPage, totalItems)}</span> dari{' '}
+                            <span className="font-bold text-slate-700">{totalItems}</span> log
                         </p>
 
                         {totalPages > 1 && (
@@ -236,7 +236,7 @@ const ActivityLogsPage: React.FC = () => {
                                 >
                                     <ChevronLeft className="w-4 h-4" />
                                 </button>
-                                <span className="text-xs font-bold text-slate-600 px-2">Page {currentPage} of {totalPages}</span>
+                                <span className="text-xs font-bold text-slate-600 px-2">Halaman {currentPage} dari {totalPages}</span>
                                 <button
                                     onClick={goToNextPage}
                                     disabled={currentPage === totalPages}

@@ -32,20 +32,20 @@ const SellerDetailPage: React.FC = () => {
         shopName: 'Tech Haven',
         email: 'john@techhaven.com',
         phone: '+1 (555) 123-4567',
-        joinDate: 'Jan 12, 2025',
+        joinDate: '12 Jan 2025',
         status: 'official' as 'official' | 'active' | 'pending' | 'suspended',
         address: '123 Innovation Drive, Silicon Valley, CA 94025',
-        bio: 'Tech Haven is a premium electronics reseller focused on providing the latest cutting-edge gadgets to tech enthusiasts worldwide.',
+        bio: 'Tech Haven adalah pengecer elektronik premium yang fokus menyediakan gadget canggih terbaru bagi para penggemar teknologi di seluruh dunia.',
         metrics: {
-            totalSales: '$424,500',
+            totalSales: 'Rp 424.500.000',
             totalOrders: 1240,
             rating: 4.8,
             conversion: '12.4%'
         },
         recentOrders: [
-            { id: 'ORD-9921', customer: 'Sarah Miller', date: '2h ago', amount: '$1,200', status: 'delivered' },
-            { id: 'ORD-9918', customer: 'Michael Chen', date: '5h ago', amount: '$450', status: 'processing' },
-            { id: 'ORD-9915', customer: 'Julie Smith', date: 'Yesterday', amount: '$890', status: 'shipped' },
+            { id: 'ORD-9921', customer: 'Sarah Miller', date: '2 jam yang lalu', amount: 'Rp 1.200.000', status: 'delivered' },
+            { id: 'ORD-9918', customer: 'Michael Chen', date: '5 jam yang lalu', amount: 'Rp 450.000', status: 'processing' },
+            { id: 'ORD-9915', customer: 'Julie Smith', date: 'Kemarin', amount: 'Rp 890.000', status: 'shipped' },
         ]
     };
 
@@ -67,7 +67,7 @@ const SellerDetailPage: React.FC = () => {
                         </h1>
                         <p className="text-slate-500 mt-1 flex items-center gap-2 font-medium">
                             <Store className="w-4 h-4 text-slate-400" />
-                            Shop ID: {seller.id} • Registered since {seller.joinDate}
+                            ID Toko: {seller.id} • Terdaftar sejak {seller.joinDate}
                         </p>
                     </div>
                 </div>
@@ -75,11 +75,11 @@ const SellerDetailPage: React.FC = () => {
                 <div className="flex items-center gap-3">
                     {seller.status === 'suspended' ? (
                         <button className="flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white rounded-xl font-bold transition-all shadow-lg active:scale-95 text-sm">
-                            <RefreshCw className="w-4 h-4" /> Activate Shop
+                            <RefreshCw className="w-4 h-4" /> Aktifkan Toko
                         </button>
                     ) : (
                         <button className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold transition-all shadow-lg active:scale-95 text-sm">
-                            <Ban className="w-4 h-4" /> Suspend Shop
+                            <Ban className="w-4 h-4" /> Tangguhkan Toko
                         </button>
                     )}
                 </div>
@@ -88,10 +88,10 @@ const SellerDetailPage: React.FC = () => {
             {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                    { label: 'Revenue Growth', value: seller.metrics.totalSales, icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-500/10' },
+                    { label: 'Pertumbuhan Pendapatan', value: seller.metrics.totalSales, icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-500/10' },
                     { label: 'Total Volume', value: seller.metrics.totalOrders, icon: Package, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-                    { label: 'Store Rating', value: `${seller.metrics.rating} Stars`, icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
-                    { label: 'Conversion Rate', value: seller.metrics.conversion, icon: ShieldCheck, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
+                    { label: 'Rating Toko', value: `${seller.metrics.rating} Bintang`, icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+                    { label: 'Tingkat Konversi', value: seller.metrics.conversion, icon: ShieldCheck, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-white border border-slate-200 p-6 rounded-2xl flex items-center justify-between group hover:border-slate-300 transition-all shadow-sm">
                         <div className="text-left">
@@ -110,40 +110,40 @@ const SellerDetailPage: React.FC = () => {
                 <div className="lg:col-span-2 space-y-8">
                     <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
                         <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2 mb-6">
-                            <AlertCircle className="w-5 h-5 text-blue-500" /> Professional Profile
+                            <AlertCircle className="w-5 h-5 text-blue-500" /> Profil Profesional
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-6">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Business Owner</label>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pemilik Bisnis</label>
                                     <p className="text-slate-900 font-bold">{seller.name}</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Contact Email</label>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Kontak</label>
                                     <p className="text-slate-900 font-bold flex items-center gap-2"><Mail className="w-4 h-4 text-slate-400" /> {seller.email}</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Phone Number</label>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Nomor Telepon</label>
                                     <p className="text-slate-900 font-bold flex items-center gap-2"><Phone className="w-4 h-4 text-slate-400" /> {seller.phone}</p>
                                 </div>
                             </div>
                             <div className="space-y-6">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Operating Address</label>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Alamat Operasional</label>
                                     <p className="text-slate-900 font-medium leading-relaxed flex gap-2"><MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" /> {seller.address}</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Shop Status</label>
+                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Status Toko</label>
                                     <div className="pt-1">
                                         <span className="px-3 py-1 bg-indigo-500/10 text-indigo-500 text-[10px] font-bold uppercase tracking-widest rounded-lg border border-indigo-500/20">
-                                            {seller.status} Account
+                                            Akun {seller.status}
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="mt-8 pt-8 border-t border-slate-100">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Shop Biography</label>
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Biografi Toko</label>
                             <p className="text-slate-500 text-sm leading-relaxed italic">"{seller.bio}"</p>
                         </div>
                     </div>
@@ -152,19 +152,19 @@ const SellerDetailPage: React.FC = () => {
                     <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                         <div className="p-6 border-b border-slate-200 flex items-center justify-between">
                             <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                                <CheckCircle2 className="w-5 h-5 text-green-500" /> Recent Activity
+                                <CheckCircle2 className="w-5 h-5 text-green-500" /> Aktivitas Terbaru
                             </h3>
-                            <button className="text-xs font-bold text-blue-600 hover:text-blue-500">View All Archive</button>
+                            <button className="text-xs font-bold text-blue-600 hover:text-blue-500">Lihat Semua Arsip</button>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full">
                                 <thead>
                                     <tr className="bg-slate-50 text-slate-500 text-[10px] font-bold uppercase tracking-widest border-b border-slate-200">
-                                        <th className="px-8 py-4">Transaction ID</th>
-                                        <th className="px-8 py-4">Customer</th>
-                                        <th className="px-8 py-4">Amount</th>
-                                        <th className="px-8 py-4">Fulfillment</th>
-                                        <th className="px-8 py-4 text-right">Date</th>
+                                        <th className="px-8 py-4">ID Transaksi</th>
+                                        <th className="px-8 py-4">Pelanggan</th>
+                                        <th className="px-8 py-4">Jumlah</th>
+                                        <th className="px-8 py-4">Status Toko</th>
+                                        <th className="px-8 py-4 text-right">Tanggal</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
@@ -178,7 +178,7 @@ const SellerDetailPage: React.FC = () => {
                                                     order.status === 'processing' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
                                                         'bg-blue-500/10 text-blue-500 border-blue-500/20'
                                                     }`}>
-                                                    {order.status}
+                                                    {order.status === 'delivered' ? 'sampai' : order.status === 'processing' ? 'diproses' : 'dikirim'}
                                                 </span>
                                             </td>
                                             <td className="px-8 py-5 text-right text-xs text-slate-400">{order.date}</td>
@@ -196,26 +196,26 @@ const SellerDetailPage: React.FC = () => {
                         <div className="absolute top-0 right-0 p-12 bg-white/5 rounded-full -mr-8 -mt-8 group-hover:scale-125 transition-transform duration-700" />
                         <div className="relative z-10">
                             <Award className="w-12 h-12 mb-4 text-indigo-200" />
-                            <h4 className="text-xl font-bold mb-2">Verified Merchant</h4>
-                            <p className="text-indigo-100 text-sm leading-relaxed mb-6 italic opacity-80">This seller has completed the official documentation process for premium selling privileges.</p>
-                            <button className="w-full py-3 bg-white text-indigo-600 font-bold rounded-xl hover:bg-indigo-50 transition-all active:scale-95 shadow-lg">Verify Next Review</button>
+                            <h4 className="text-xl font-bold mb-2">Penjual Terverifikasi</h4>
+                            <p className="text-indigo-100 text-sm leading-relaxed mb-6 italic opacity-80">Penjual ini telah menyelesaikan proses dokumentasi resmi untuk hak penjualan premium.</p>
+                            <button className="w-full py-3 bg-white text-indigo-600 font-bold rounded-xl hover:bg-indigo-50 transition-all active:scale-95 shadow-lg">Verifikasi Tinjauan Berikutnya</button>
                         </div>
                     </div>
 
                     <div className="bg-white border border-slate-200 rounded-3xl p-6 text-left shadow-sm">
-                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Account Integrity</h4>
+                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Integritas Akun</h4>
                         <div className="space-y-4">
                             <button className="w-full flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-slate-300 transition-all group">
                                 <div className="flex items-center gap-3">
                                     <Mail className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
-                                    <span className="text-xs font-bold text-slate-500 group-hover:text-slate-900 transition-colors">Broadcast Message</span>
+                                    <span className="text-xs font-bold text-slate-500 group-hover:text-slate-900 transition-colors">Pesan Siaran</span>
                                 </div>
                                 <ChevronRight className="w-4 h-4 text-slate-400" />
                             </button>
                             <button className="w-full flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-slate-300 transition-all group">
                                 <div className="flex items-center gap-3">
                                     <Clock className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
-                                    <span className="text-xs font-bold text-slate-500 group-hover:text-slate-900 transition-colors">Audit Change Log</span>
+                                    <span className="text-xs font-bold text-slate-500 group-hover:text-slate-900 transition-colors">Audit Log Perubahan</span>
                                 </div>
                                 <ChevronRight className="w-4 h-4 text-slate-400" />
                             </button>

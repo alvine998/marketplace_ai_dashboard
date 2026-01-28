@@ -5,6 +5,7 @@ export interface Category {
   name: string;
   imageUrl?: string;
   parentId?: string | null;
+  isHighlight?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -13,12 +14,14 @@ export interface CreateCategoryPayload {
   name: string;
   imageUrl?: string;
   parentId?: string | null;
+  isHighlight?: boolean;
 }
 
 export interface UpdateCategoryPayload {
   name?: string;
   imageUrl?: string;
   parentId?: string | null;
+  isHighlight?: boolean;
 }
 
 export interface CategoryListResponse {

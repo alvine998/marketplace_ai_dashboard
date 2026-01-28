@@ -24,8 +24,8 @@ const ForgotPasswordPage: React.FC = () => {
                     <Link to="/" className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-tr from-blue-600 to-indigo-600 mb-6 shadow-xl shadow-blue-500/20 hover:scale-105 transition-transform">
                         <Mail className="w-8 h-8 text-white" />
                     </Link>
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Reset Password</h1>
-                    <p className="text-slate-500">Enter your email and we'll send you a link to reset your password</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Reset Kata Sandi</h1>
+                    <p className="text-slate-500">Masukkan email Anda dan kami akan mengirimkan tautan untuk mereset kata sandi</p>
                 </div>
 
                 {/* Card */}
@@ -34,7 +34,7 @@ const ForgotPasswordPage: React.FC = () => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             {/* Email Field */}
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">Email Address</label>
+                                <label className="text-sm font-medium text-slate-700 ml-1">Alamat Email</label>
                                 <div className="relative group">
                                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-blue-500 text-slate-500">
                                         <Mail className="w-5 h-5" />
@@ -55,7 +55,7 @@ const ForgotPasswordPage: React.FC = () => {
                                 type="submit"
                                 className="w-full flex items-center justify-center gap-2 py-3.5 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 active:scale-[0.98] transition-all group"
                             >
-                                Send Reset Link
+                                Kirim Tautan Reset
                                 <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                             </button>
 
@@ -64,7 +64,7 @@ const ForgotPasswordPage: React.FC = () => {
                                 className="flex items-center justify-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors group py-2"
                             >
                                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                                Back to Log In
+                                Kembali ke Masuk
                             </Link>
                         </form>
                     ) : (
@@ -73,9 +73,9 @@ const ForgotPasswordPage: React.FC = () => {
                                 <CheckCircle2 className="w-10 h-10" />
                             </div>
                             <div className="space-y-2">
-                                <h2 className="text-xl font-bold text-slate-900">Check your email</h2>
+                                <h2 className="text-xl font-bold text-slate-900">Periksa email Anda</h2>
                                 <p className="text-slate-500">
-                                    We've sent a password reset link to <span className="text-blue-600 font-medium">{email}</span>
+                                    Kami telah mengirimkan tautan reset kata sandi ke <span className="text-blue-600 font-medium">{email}</span>
                                 </p>
                             </div>
                             <Link
@@ -83,7 +83,7 @@ const ForgotPasswordPage: React.FC = () => {
                                 className="inline-flex items-center justify-center gap-2 text-blue-600 font-semibold hover:text-blue-500 transition-colors"
                             >
                                 <ArrowLeft className="w-4 h-4" />
-                                Back to Log In
+                                Kembali ke Masuk
                             </Link>
                         </div>
                     )}

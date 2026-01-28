@@ -32,46 +32,46 @@ interface RolePermissions {
 }
 
 const RolePermissionsPage: React.FC = () => {
-    const [selectedRole, setSelectedRole] = useState<'Super Admin' | 'Editor' | 'Viewer'>('Super Admin');
+    const [selectedRole, setSelectedRole] = useState<'Admin Super' | 'Editor' | 'Viewer'>('Admin Super');
     const [searchTerm, setSearchTerm] = useState('');
 
     const roles = [
-        { id: 'Super Admin', label: 'Super Admin', icon: ShieldCheck, color: 'text-indigo-500', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' },
-        { id: 'Editor', label: 'Content Editor', icon: Edit3, color: 'text-blue-500', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
-        { id: 'Viewer', label: 'View Only', icon: Eye, color: 'text-slate-500', bg: 'bg-slate-500/10', border: 'border-slate-500/20' },
+        { id: 'Admin Super', label: 'Admin Super', icon: ShieldCheck, color: 'text-indigo-500', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' },
+        { id: 'Editor', label: 'Editor Konten', icon: Edit3, color: 'text-blue-500', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+        { id: 'Viewer', label: 'Hanya Lihat', icon: Eye, color: 'text-slate-500', bg: 'bg-slate-500/10', border: 'border-slate-500/20' },
     ];
 
     const permissions: Permission[] = [
-        // Dashboard
-        { id: 'dash_view', label: 'View Analytics', description: 'Access to revenue and growth charts', category: 'Dashboard' },
-        { id: 'dash_export', label: 'Export Reports', description: 'Download CSV/PDF reports', category: 'Dashboard' },
+        // Dasbor
+        { id: 'dash_view', label: 'Lihat Analitik', description: 'Akses ke grafik pendapatan dan pertumbuhan', category: 'Dasbor' },
+        { id: 'dash_export', label: 'Ekspor Laporan', description: 'Unduh laporan CSV/PDF', category: 'Dasbor' },
 
-        // Inventory
-        { id: 'prod_view', label: 'View Products', description: 'Browse all seller inventory', category: 'Inventory' },
-        { id: 'prod_edit', label: 'Moderate Products', description: 'Edit or remove platform listings', category: 'Inventory' },
-        { id: 'prod_cat', label: 'Manage Categories', description: 'Create and map product categories', category: 'Inventory' },
+        // Inventaris
+        { id: 'prod_view', label: 'Lihat Produk', description: 'Jelajahi semua inventaris penjual', category: 'Inventaris' },
+        { id: 'prod_edit', label: 'Moderasi Produk', description: 'Ubah atau hapus daftar platform', category: 'Inventaris' },
+        { id: 'prod_cat', label: 'Kelola Kategori', description: 'Buat dan petakan kategori produk', category: 'Inventaris' },
 
-        // Merchants
-        { id: 'sell_view', label: 'View Sellers', description: 'Access merchant profiles', category: 'Merchants' },
-        { id: 'sell_verify', label: 'Verify Merchants', description: 'Approve or suspend shop accounts', category: 'Merchants' },
+        // Pedagang
+        { id: 'sell_view', label: 'Lihat Penjual', description: 'Akses profil pedagang', category: 'Pedagang' },
+        { id: 'sell_verify', label: 'Verifikasi Pedagang', description: 'Setujui atau tangguhkan akun toko', category: 'Pedagang' },
 
-        // Communications
-        { id: 'push_send', label: 'Send Push Notifications', description: 'Broadcast global alerts', category: 'Communications' },
-        { id: 'promo_manage', label: 'Manage Promotions', description: 'Configure home screen banners', category: 'Communications' },
+        // Komunikasi
+        { id: 'push_send', label: 'Kirim Notifikasi Push', description: 'Siarkan peringatan global', category: 'Komunikasi' },
+        { id: 'promo_manage', label: 'Kelola Promosi', description: 'Konfigurasi banner layar utama', category: 'Komunikasi' },
 
-        // System
-        { id: 'admin_manage', label: 'Manage Team', description: 'Invite and remove associate admins', category: 'System' },
-        { id: 'settings_edit', label: 'Platform Settings', description: 'Modify core system variables', category: 'System' },
+        // Sistem
+        { id: 'admin_manage', label: 'Kelola Tim', description: 'Undang dan hapus admin rekan', category: 'Sistem' },
+        { id: 'settings_edit', label: 'Pengaturan Platform', description: 'Ubah variabel sistem inti', category: 'Sistem' },
     ];
 
     const [rolePermissions, setRolePermissions] = useState<RolePermissions>({
-        'Super Admin': permissions.map(p => p.id),
+        'Admin Super': permissions.map(p => p.id),
         'Editor': ['dash_view', 'prod_view', 'prod_edit', 'prod_cat', 'sell_view', 'push_send', 'promo_manage'],
         'Viewer': ['dash_view', 'prod_view', 'sell_view'],
     });
 
     const togglePermission = (permId: string) => {
-        if (selectedRole === 'Super Admin') return; // Protect Super Admin
+        if (selectedRole === 'Admin Super') return; // Protect Admin Super
 
         setRolePermissions(prev => {
             const currentPerms = prev[selectedRole] || [];
@@ -94,8 +94,8 @@ const RolePermissionsPage: React.FC = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="text-left">
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Role Permissions</h1>
-                    <p className="text-slate-500 mt-1 font-medium italic">Define granular access levels for administrative staff.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Izin Peran</h1>
+                    <p className="text-slate-500 mt-1 font-medium italic">Tentukan tingkat akses granular untuk staf administratif.</p>
                 </div>
             </div>
 
@@ -114,11 +114,11 @@ const RolePermissionsPage: React.FC = () => {
                             <div className={`p-3 rounded-2xl ${role.bg} ${role.color} group-hover:scale-110 transition-transform`}>
                                 <role.icon className="w-6 h-6" />
                             </div>
-                            {selectedRole === role.id && <div className="p-1 px-3 bg-indigo-500 text-white text-[10px] font-bold rounded-lg uppercase tracking-widest">Active Focus</div>}
+                            {selectedRole === role.id && <div className="p-1 px-3 bg-indigo-500 text-white text-[10px] font-bold rounded-lg uppercase tracking-widest">Fokus Aktif</div>}
                         </div>
                         <div className="relative z-10">
                             <h4 className="text-lg font-bold text-slate-900">{role.label}</h4>
-                            <p className="text-xs text-slate-500 mt-1 font-medium">{rolePermissions[role.id].length} Permissions Enabled</p>
+                            <p className="text-xs text-slate-500 mt-1 font-medium">{rolePermissions[role.id].length} Izin Diaktifkan</p>
                         </div>
                         {selectedRole === role.id && <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-indigo-500/5 rounded-full blur-3xl" />}
                     </button>
@@ -133,15 +133,15 @@ const RolePermissionsPage: React.FC = () => {
                             <Lock className="w-6 h-6 text-indigo-500" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-slate-900 uppercase tracking-tight">{selectedRole} Policy</h3>
-                            <p className="text-slate-500 text-xs font-medium">Toggle individual capabilities below</p>
+                            <h3 className="text-xl font-bold text-slate-900 uppercase tracking-tight">Kebijakan {selectedRole}</h3>
+                            <p className="text-slate-500 text-xs font-medium">Aktifkan/matikan kapasitas individu di bawah ini</p>
                         </div>
                     </div>
                     <div className="relative w-full md:w-80 group">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
                         <input
                             type="text"
-                            placeholder="Filter permissions..."
+                            placeholder="Filter izin..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3 pl-11 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-['Inter'] placeholder-slate-400"
@@ -154,7 +154,7 @@ const RolePermissionsPage: React.FC = () => {
                         <div key={cat} className="space-y-4">
                             <h4 className="flex items-center gap-3 text-indigo-500 text-[10px] font-bold uppercase tracking-[0.2em] px-2">
                                 <span className="w-8 h-px bg-indigo-500/20" />
-                                {cat} Operations
+                                {cat} Operasi
                                 <span className="flex-1 h-px bg-indigo-500/20" />
                             </h4>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -170,11 +170,11 @@ const RolePermissionsPage: React.FC = () => {
                                         <div className="flex items-start gap-4 text-left">
                                             <div className={`mt-1 p-2 rounded-xl transition-colors ${rolePermissions[selectedRole].includes(perm.id) ? 'bg-indigo-500/10 text-indigo-400' : 'bg-slate-800 text-slate-600'
                                                 }`}>
-                                                {cat === 'Dashboard' && <LayoutDashboard className="w-4 h-4" />}
-                                                {cat === 'Inventory' && <Package className="w-4 h-4" />}
-                                                {cat === 'Merchants' && <Store className="w-4 h-4" />}
-                                                {cat === 'Communications' && <Smartphone className="w-4 h-4" />}
-                                                {cat === 'System' && <Shield className="w-4 h-4" />}
+                                                {cat === 'Dasbor' && <LayoutDashboard className="w-4 h-4" />}
+                                                {cat === 'Inventaris' && <Package className="w-4 h-4" />}
+                                                {cat === 'Pedagang' && <Store className="w-4 h-4" />}
+                                                {cat === 'Komunikasi' && <Smartphone className="w-4 h-4" />}
+                                                {cat === 'Sistem' && <Shield className="w-4 h-4" />}
                                             </div>
                                             <div>
                                                 <p className={`text-sm font-bold transition-colors ${rolePermissions[selectedRole].includes(perm.id) ? 'text-slate-900' : 'text-slate-400'
@@ -198,7 +198,7 @@ const RolePermissionsPage: React.FC = () => {
                 <div className="p-6 bg-slate-50 border-t border-slate-200 flex items-center justify-center gap-4">
                     <Info className="w-4 h-4 text-indigo-500" />
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-                        Changes to <span className="text-indigo-500">{selectedRole}</span> will apply globally to all assigned associates. <span className="text-slate-900 ml-2">Super Admin is immutable.</span>
+                        Perubahan pada <span className="text-indigo-500">{selectedRole}</span> akan berlaku secara global untuk semua rekan yang ditugaskan. <span className="text-slate-900 ml-2">Admin Super tidak dapat diubah.</span>
                     </p>
                 </div>
             </div>
